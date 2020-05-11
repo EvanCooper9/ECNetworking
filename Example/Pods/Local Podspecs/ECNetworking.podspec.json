@@ -1,0 +1,22 @@
+{
+  "name": "ECNetworking",
+  "version": "0.1.0",
+  "summary": "A short description of ECNetworking.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/EvanCooper9/ECNetworking",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "EvanCooper9": "evan.cooper@rogers.com"
+  },
+  "source": {
+    "git": "https://github.com/EvanCooper9/ECNetworking.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "ECNetworking/Classes/**/*"
+}

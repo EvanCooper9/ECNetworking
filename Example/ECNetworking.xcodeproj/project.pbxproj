@@ -13,6 +13,10 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		7C42B03C24676ACD00FFDBC2 /* SampleGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */; };
+		7C42B07B2469B88600FFDBC2 /* AuthenticationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B07A2469B88600FFDBC2 /* AuthenticationAction.swift */; };
+		7C42B07D2469B8E800FFDBC2 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */; };
+		7C42B0812469BDB200FFDBC2 /* CommonHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B0802469BDB200FFDBC2 /* CommonHeaders.swift */; };
 		7DA9414518E3C7032DF4E3C4 /* Pods_ECNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD81E2E7A5FB79978CD806A /* Pods_ECNetworking_Example.framework */; };
 		AA890B1801A902DA544228D7 /* Pods_ECNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F683EED064529E46EB5CD99 /* Pods_ECNetworking_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -42,11 +46,15 @@
 		607FACE51AFB9204008FA782 /* ECNetworking_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECNetworking_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleGetRequest.swift; sourceTree = "<group>"; };
+		7C42B07A2469B88600FFDBC2 /* AuthenticationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAction.swift; sourceTree = "<group>"; };
+		7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRequest.swift; sourceTree = "<group>"; };
+		7C42B0802469BDB200FFDBC2 /* CommonHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeaders.swift; sourceTree = "<group>"; };
 		7DEE33089851D98D04D7609F /* Pods-ECNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ECNetworking_Tests.release.xcconfig"; path = "Target Support Files/Pods-ECNetworking_Tests/Pods-ECNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A51C75FB220B74FD389DF2DE /* Pods-ECNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ECNetworking_Example.release.xcconfig"; path = "Target Support Files/Pods-ECNetworking_Example/Pods-ECNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BF8C131CBF221CD32A2B3469 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		DFE74D30EC05490962A6DBA9 /* ECNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = ECNetworking.podspec; path = ../ECNetworking.podspec; sourceTree = "<group>"; };
-		F60CD6F298654C5333F0908F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		BF8C131CBF221CD32A2B3469 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		DFE74D30EC05490962A6DBA9 /* ECNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ECNetworking.podspec; path = ../ECNetworking.podspec; sourceTree = "<group>"; };
+		F60CD6F298654C5333F0908F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +110,8 @@
 		607FACD21AFB9204008FA782 /* Example for ECNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				7C42B0792469B87100FFDBC2 /* Actions */,
+				7C42B03A24676AC000FFDBC2 /* Requests */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -148,6 +158,24 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		7C42B03A24676AC000FFDBC2 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */,
+				7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */,
+				7C42B0802469BDB200FFDBC2 /* CommonHeaders.swift */,
+			);
+			name = Requests;
+			sourceTree = "<group>";
+		};
+		7C42B0792469B87100FFDBC2 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				7C42B07A2469B88600FFDBC2 /* AuthenticationAction.swift */,
+			);
+			name = Actions;
+			sourceTree = "<group>";
+		};
 		9A18E2B002BFA742F238E058 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +184,6 @@
 				58FEF6111EB0C70C76B28FEC /* Pods-ECNetworking_Tests.debug.xcconfig */,
 				7DEE33089851D98D04D7609F /* Pods-ECNetworking_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -228,6 +255,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -352,8 +380,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C42B0812469BDB200FFDBC2 /* CommonHeaders.swift in Sources */,
+				7C42B03C24676ACD00FFDBC2 /* SampleGetRequest.swift in Sources */,
+				7C42B07D2469B8E800FFDBC2 /* AuthenticationRequest.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				7C42B07B2469B88600FFDBC2 /* AuthenticationAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

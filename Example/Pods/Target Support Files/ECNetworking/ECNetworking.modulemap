@@ -1,0 +1,6 @@
+framework module ECNetworking {
+  umbrella header "ECNetworking-umbrella.h"
+
+  export *
+  module * { export * }
+}
