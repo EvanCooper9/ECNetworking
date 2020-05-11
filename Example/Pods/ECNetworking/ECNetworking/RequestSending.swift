@@ -58,7 +58,7 @@ extension RequestSender: RequestSending {
                     
                     guard let data = data,
                         let response = response as? HTTPURLResponse,
-                        let responseBody = try? request.response(from: data, with: self.decoder) else {
+                        let responseBody = try? request.response(from: data) else {
                             completionHandler(.failure(NetworkError.badResponse))
                             return
                     }

@@ -6,15 +6,16 @@ public protocol Request: Encodable {
     var method: RequestMethod { get }
     var url: URL { get }
     
-    func response(from data: Data, with decoder: JSONDecoder) throws -> Response
+    func response(from data: Data) throws -> Response
 }
 
 extension Request where Response: Decodable {
-    public func response(from data: Data, with decoder: JSONDecoder) throws -> Response {
+    public func response(from data: Data) throws -> Response {
+        let decoder = JSONDecoder()
         return try decoder.decode(Response.self, from: data)
     }
 }
 
 extension Request where Response == Void {
-    public func response(from data: Data, with decoder: JSONDecoder) throws {}
+    public func response(from data: Data) throws {}
 }
