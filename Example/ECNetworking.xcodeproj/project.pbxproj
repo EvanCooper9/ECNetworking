@@ -198,7 +198,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				A3B592B7FBEB43ADD04DE471 /* [CP] Embed Pods Frameworks */,
+				150F344F8A4BC0E72C0FB7F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -291,6 +291,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		150F344F8A4BC0E72C0FB7F8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ECNetworking_Example/Pods-ECNetworking_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ECNetworking/ECNetworking.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ECNetworking.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ECNetworking_Example/Pods-ECNetworking_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		19DE7B379BE988A58884EE56 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -309,24 +327,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ECNetworking_Tests/Pods-ECNetworking_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A3B592B7FBEB43ADD04DE471 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ECNetworking_Example/Pods-ECNetworking_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ECNetworking/ECNetworking.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ECNetworking.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ECNetworking_Example/Pods-ECNetworking_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EA00E6C543414633D8D13D09 /* [CP] Check Pods Manifest.lock */ = {

@@ -1,7 +1,10 @@
 use_frameworks!
 
 target 'ECNetworking_Example' do
-  pod 'ECNetworking', :path => '../'
+
+#  ECNetworkingOptions = { :git => 'git@github.com:EvanCooper9/ECNetworking.git' }
+  ECNetworkingOptions = { :path => '../' }
+  pod 'ECNetworking', ECNetworkingOptions
 
   target 'ECNetworking_Tests' do
     inherit! :search_paths
