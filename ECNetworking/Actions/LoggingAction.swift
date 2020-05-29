@@ -1,12 +1,8 @@
-public struct LoggingAction {
-    public var sender: Networking?
-    public init() {}
-}
+struct LoggingAction {}
 
-extension LoggingAction: RequestAction {
-    public func requestWillBegin(_ request: URLRequest, completion: (Result<URLRequest, Error>) -> Void) {
+extension LoggingAction: RequestBeganAction {
+    public func requestBegan(_ request: URLRequest) {
         print(description(for: request))
-        completion(.success(request))
     }
     
     private func description(for request: URLRequest) -> String {
@@ -31,21 +27,32 @@ extension LoggingAction: RequestAction {
     }
 }
 
-extension LoggingAction: ResponseAction {
-    public func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
-        if let responseBody = responseBody as? Encodable {
-            print(description(for: responseBody, response: response))
+extension LoggingAction: ResponseBeganAction {
+    public func responseBegan<T: Request>(network: Networking, request: T, response: HTTPURLResponse) {
+        print(description(response: response))
+    }
+    
+    private func description(response: HTTPURLResponse) -> String {
+        var description = "\n---------- BEGIN RESPONSE ----------\n"
+        description.append("\(response)")
+        description.append("\n---------- END RESPONSE ----------\n")
+        return description
+    }
+}
+
+extension LoggingAction: ResponseCompletedAction {
+    public func responseReceived<T: Request>(network: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
+        if let responseBody = responseBody as? Encodable,
+            let responseDescription = description(for: responseBody, response: response) {
+                print(responseDescription)
         }
         completion(.success(responseBody))
     }
     
-    private func description(for responseBody: Encodable, response: HTTPURLResponse) -> String {
-        var description = "\n---------- BEGIN RESPONSE ----------\n"
-        description.append("\(response)")
+    private func description(for responseBody: Encodable, response: HTTPURLResponse) -> String? {
         if let dataString = try? responseBody.encodedToString() {
-            description.append("\nData: \(dataString))")
+            return "Data: \(dataString))"
         }
-        description.append("\n---------- END RESPONSE ----------\n")
-        return description
+        return nil
     }
 }

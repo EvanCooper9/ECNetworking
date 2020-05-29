@@ -18,12 +18,20 @@ public final class Network {
     private let decoder: JSONDecoder
     private let session: URLSession
     
-    private var requestActions: [RequestAction] {
-        actions.compactMap { $0 as? RequestAction }
+    private var requestWillBeginActions: [RequestWillBeginAction] {
+        actions.compactMap { $0 as? RequestWillBeginAction }
     }
     
-    private var responseActions: [ResponseAction] {
-        actions.compactMap { $0 as? ResponseAction }
+    private var requestBeganActions: [RequestBeganAction] {
+        actions.compactMap { $0 as? RequestBeganAction }
+    }
+    
+    private var responseBeganActions: [ResponseBeganAction] {
+        actions.compactMap { $0 as? ResponseBeganAction }
+    }
+    
+    private var responseCompletedActions: [ResponseCompletedAction] {
+        actions.compactMap { $0 as? ResponseCompletedAction }
     }
 
     // MARK: - Lifecycle
@@ -33,6 +41,9 @@ public final class Network {
         self.configuration = configuration
         self.decoder = decoder
         self.session = session
+        
+        guard configuration.logging else { return }
+        add(action: LoggingAction())
     }
 }
 
@@ -46,11 +57,14 @@ extension Network: Networking {
     
     public func send<T: Request>(_ request: T, completionHandler: @escaping ((Result<T.Response, Error>) -> Void)) {
         let urlRequest = URLRequest(request: request, baseURL: configuration.baseURL)
-        requestActions.requestWillBegin(with: urlRequest) { result in
+        requestWillBeginActions.requestWillBegin(with: urlRequest) { result in
             switch result {
             case .failure(let error):
                 completionHandler(.failure(error))
             case .success(let urlRequest):
+                
+                requestBeganActions.requestBegan(request: urlRequest)
+                
                 let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
                     
@@ -59,14 +73,20 @@ extension Network: Networking {
                         return
                     }
                     
+                    guard let response = response as? HTTPURLResponse else {
+                        completionHandler(.failure(NetworkError.badResponse))
+                        return
+                    }
+                    
+                    self.responseBeganActions.responseBegan(network: self, request: request, response: response)
+                    
                     guard let data = data,
-                        let response = response as? HTTPURLResponse,
                         let responseBody = try? request.response(from: data, with: self.decoder) else {
                             completionHandler(.failure(NetworkError.badResponse))
                             return
                     }
                     
-                    self.responseActions.responseReceived(sender: self, request: request, responseBody: responseBody, response: response) { result in
+                    self.responseCompletedActions.responseReceived(sender: self, request: request, responseBody: responseBody, response: response) { result in
                         switch result {
                         case .failure(let error):
                             completionHandler(.failure(error))

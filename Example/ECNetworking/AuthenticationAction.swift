@@ -14,7 +14,7 @@ struct AuthenticationAction {
     }
 }
 
-extension AuthenticationAction: RequestAction {
+extension AuthenticationAction: RequestWillBeginAction {
     func requestWillBegin(_ request: URLRequest, completion: RequestActionClosure) {
         var request = request
         var headers = request.allHTTPHeaderFields ?? [:]
@@ -26,8 +26,8 @@ extension AuthenticationAction: RequestAction {
     }
 }
 
-extension AuthenticationAction: ResponseAction {
-    func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
+extension AuthenticationAction: ResponseCompletedAction {
+    func responseReceived<T: Request>(network: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
         
         guard let sampleGetReponseBody = responseBody as? SampleGetResponse else {
             completion(.success(responseBody))
@@ -44,14 +44,14 @@ extension AuthenticationAction: ResponseAction {
             return
         }
 
-        sender.send(AuthenticationRequest()) { result in
+        network.send(AuthenticationRequest()) { result in
             switch result {
             case .failure:
                 completion(.failure(AuthenticationError.failed))
             case .success:
                 // Authentication successful. Resend the original request.
                 self.userDefauls.authentication = true
-                sender.send(request) { result in
+                network.send(request) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))

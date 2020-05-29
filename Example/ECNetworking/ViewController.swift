@@ -3,20 +3,31 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let requestSender: Networking = Network(configuration: .init(baseURL: URL(string: "https://postman-echo.com")!))
+    // MARK: - Private Properties
+    
+    private lazy var requestSender: Networking = {
+        let configuration = NetworkConfiguration(
+            baseURL: URL(string: "https://postman-echo.com")!,
+            logging: true
+        )
+        
+        return Network(configuration: configuration)
+    }()
+    
     private let userDefaults: UserDefaults = .standard
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let authenticationAction = AuthenticationAction(userDefaults: userDefaults)
-        let loggingAction = LoggingAction()
-        
         requestSender.add(action: authenticationAction)
-        requestSender.add(action: loggingAction)
     }
     
-    @IBAction func sendRequestButtonTapped(_ sender: Any) {
+    // MARK: - Private Methods
+    
+    @IBAction private func sendRequestButtonTapped(_ sender: Any) {
         let request = SampleGetRequest()
         requestSender.send(request) { result in
             switch result {
@@ -28,7 +39,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func clearAuthButtonTapped(_ sender: Any) {
+    @IBAction private func clearAuthButtonTapped(_ sender: Any) {
         userDefaults.authentication = false
     }
 }

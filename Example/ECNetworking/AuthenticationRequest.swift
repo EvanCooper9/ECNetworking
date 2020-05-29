@@ -8,7 +8,7 @@ extension AuthenticationRequest: Request {
     
     var data: Encodable? { nil }
     var headers: Headers { [:] }
-    var method: RequestMethod { .get }
+    var method: RequestMethod { .post }
     
     func buildURL(with baseURL: URL) -> URL {
         baseURL.appendingPathComponent("post")
