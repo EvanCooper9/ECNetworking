@@ -9,34 +9,17 @@
 Pod::Spec.new do |s|
   s.name             = 'ECNetworking'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of ECNetworking.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
+  s.summary          = 'A library with a simple interface for sending, receiving & managing requests.'
+  s.description      = 'A library with a simple interface for sending, receiving & managing requests.
+                        Creating requests and defining what their response looks like can be done in a few lines.
+                        Managing complicated workflows like authentication is made easy with request Actions'
   s.homepage         = 'https://github.com/EvanCooper9/ECNetworking'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'EvanCooper9' => 'evan.cooper@rogers.com' }
   s.source           = { :git => 'https://github.com/EvanCooper9/ECNetworking.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  s.social_media_url = 'https://evancooper.tech'
   s.ios.deployment_target = '11.0'
-
+  s.swift_version = '5.0'
   s.source_files = 'ECNetworking/**/*'
-  
-  # s.resource_bundles = {
-  #   'ECNetworking' => ['ECNetworking/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end

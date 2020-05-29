@@ -4,8 +4,8 @@ public protocol Request: Encodable {
     
     var headers: Headers { get }
     var method: RequestMethod { get }
-    var url: URL { get }
     
+    func buildURL(with baseURL: URL) -> URL
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response
 }
 

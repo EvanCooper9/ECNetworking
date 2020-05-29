@@ -18,7 +18,7 @@ extension Array where Element == RequestAction {
 }
 
 extension Array where Element == ResponseAction {
-    func responseReceived<T: Request>(sender: RequestSending, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping (Result<T.Response, Error>) -> Void) {
+    func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping (Result<T.Response, Error>) -> Void) {
         guard let first = first else {
             completion(.success(responseBody))
             return

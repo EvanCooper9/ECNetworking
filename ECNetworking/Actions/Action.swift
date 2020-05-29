@@ -23,5 +23,5 @@ public protocol ResponseAction: Action {
     ///   - responseBody: The body of the response.
     ///   - response: The response that was received.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the response from being received by the caller.
-    func responseReceived<T: Request>(sender: RequestSending, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>)
+    func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>)
 }

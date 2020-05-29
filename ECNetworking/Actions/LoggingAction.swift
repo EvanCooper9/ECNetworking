@@ -1,5 +1,5 @@
 public struct LoggingAction {
-    public var sender: RequestSending?
+    public var sender: Networking?
     public init() {}
 }
 
@@ -32,7 +32,7 @@ extension LoggingAction: RequestAction {
 }
 
 extension LoggingAction: ResponseAction {
-    public func responseReceived<T: Request>(sender: RequestSending, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
+    public func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
         if let responseBody = responseBody as? Encodable {
             print(description(for: responseBody, response: response))
         }

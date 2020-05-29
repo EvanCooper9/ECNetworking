@@ -3,7 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let requestSender: RequestSending = RequestSender()
+    private let requestSender: Networking = Network(configuration: .init(baseURL: URL(string: "https://postman-echo.com")!))
     private let userDefaults: UserDefaults = .standard
     
     override func viewDidLoad() {

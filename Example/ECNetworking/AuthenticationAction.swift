@@ -27,7 +27,7 @@ extension AuthenticationAction: RequestAction {
 }
 
 extension AuthenticationAction: ResponseAction {
-    func responseReceived<T: Request>(sender: RequestSending, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
+    func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
         
         guard let sampleGetReponseBody = responseBody as? SampleGetResponse else {
             completion(.success(responseBody))
@@ -43,9 +43,7 @@ extension AuthenticationAction: ResponseAction {
             completion(.success(responseBody))
             return
         }
-        
-        print("Authentication failed: \(request.url.absoluteString)")
-        
+
         sender.send(AuthenticationRequest()) { result in
             switch result {
             case .failure:

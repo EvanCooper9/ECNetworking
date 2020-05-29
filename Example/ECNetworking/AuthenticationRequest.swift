@@ -10,8 +10,7 @@ extension AuthenticationRequest: Request {
     var headers: Headers { [:] }
     var method: RequestMethod { .get }
     
-    var url: URL {
-        URL(string: "https://postman-echo.com")!
-            .appendingPathComponent("post")
+    func buildURL(with baseURL: URL) -> URL {
+        baseURL.appendingPathComponent("post")
     }
 }

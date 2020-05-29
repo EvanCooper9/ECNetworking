@@ -1,19 +1,20 @@
-public protocol RequestSending {
+public protocol Networking {
     func add(action: Action)
     func send<T: Request>(_ request: T, completionHandler: @escaping ((Result<T.Response, Error>) -> Void))
 }
 
-extension RequestSending {
+extension Networking {
     public func send<T: Request>(_ request: T, completionHandler: @escaping ((Result<T.Response, Error>) -> Void)) {
         send(request, completionHandler: completionHandler)
     }
 }
 
-public final class RequestSender {
+public final class Network {
     
     // MARK: - Private Properties
     
     private var actions: [Action]
+    private let configuration: NetworkConfiguration
     private let decoder: JSONDecoder
     private let session: URLSession
     
@@ -27,8 +28,9 @@ public final class RequestSender {
 
     // MARK: - Lifecycle
     
-    public init(actions: [Action] = [], decoder: JSONDecoder = JSONDecoder(), session: URLSession = .shared) {
+    public init(actions: [Action] = [], configuration: NetworkConfiguration, decoder: JSONDecoder = JSONDecoder(), session: URLSession = .shared) {
         self.actions = actions
+        self.configuration = configuration
         self.decoder = decoder
         self.session = session
     }
@@ -36,14 +38,15 @@ public final class RequestSender {
 
 // MARK: - Request Sending
 
-extension RequestSender: RequestSending {
+extension Network: Networking {
     
     public func add(action: Action) {
         actions.append(action)
     }
     
     public func send<T: Request>(_ request: T, completionHandler: @escaping ((Result<T.Response, Error>) -> Void)) {
-        requestActions.requestWillBegin(with: .init(request: request)) { result in
+        let urlRequest = URLRequest(request: request, baseURL: configuration.baseURL)
+        requestActions.requestWillBegin(with: urlRequest) { result in
             switch result {
             case .failure(let error):
                 completionHandler(.failure(error))
