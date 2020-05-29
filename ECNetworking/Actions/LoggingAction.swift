@@ -51,7 +51,7 @@ extension LoggingAction: ResponseCompletedAction {
     
     private func description(for responseBody: Encodable, response: HTTPURLResponse) -> String? {
         if let dataString = try? responseBody.encodedToString() {
-            return "Data: \(dataString))"
+            return "Data: \(dataString)"
         }
         return nil
     }
