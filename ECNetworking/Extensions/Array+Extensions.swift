@@ -1,5 +1,5 @@
 extension Array where Element == RequestWillBeginAction {
-    func requestWillBegin(with request: URLRequest, completion: (Result<URLRequest, Error>) -> Void) {
+    func requestWillBegin<T: Request>(with request: T, completion: (Result<T, Error>) -> Void) {
         guard let first = first else {
             completion(.success(request))
             return

@@ -2,8 +2,9 @@ public protocol Request: Encodable {
     
     associatedtype Response
     
-    var headers: Headers { get }
+    var headers: Headers { get set }
     var method: RequestMethod { get }
+    var requiresAuthentication: Bool { get }
     
     func buildURL(with baseURL: URL) -> URL
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response

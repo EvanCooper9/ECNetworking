@@ -1,15 +1,12 @@
 public protocol Action {}
 
 public protocol RequestWillBeginAction: Action {
-    
-    typealias RequestActionClosure = (Result<URLRequest, Error>) -> Void
-    
     /// Called before a request will start. Provides an opportunity to modify a request before being sent
     /// - Note: `completion` must be called, or else requests will hang.
     /// - Parameters:
     ///   - request: The request that will be sent.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the request from being sent.
-    func requestWillBegin(_ request: URLRequest, completion: RequestActionClosure)
+    func requestWillBegin<T: Request>(_ request: T, completion: (Result<T, Error>) -> Void)
 }
 
 public protocol RequestBeganAction: Action {

@@ -19,8 +19,8 @@ extension LoggingAction: RequestBeganAction {
             description.append(" -H \"\(key): \(value)\"")
         }
         description.append(" -g --verbose")
-        if let body = request.httpBody, let data = try? body.encoded() {
-            description.append(" -d '\(String(decoding: data, as: UTF8.self))'")
+        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+            description.append(" -d '\(bodyString)'")
         }
         description.append("\n---------- END REQUEST ----------\n")
         return description
