@@ -6,7 +6,7 @@ public protocol RequestWillBeginAction: Action {
     /// - Parameters:
     ///   - request: The request that will be sent.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the request from being sent.
-    func requestWillBegin<T: Request>(_ request: T, completion: (Result<T, Error>) -> Void)
+    func requestWillBegin(_ request: NetworkRequest, completion: (Result<NetworkRequest, Error>) -> Void)
 }
 
 public protocol RequestBeganAction: Action {
@@ -23,7 +23,7 @@ public protocol ResponseBeganAction: Action {
     ///   - network: The network that sent the request.
     ///   - request: The request that was sent.
     ///   - response: The response that was received.
-    func responseBegan<T: Request>(network: Networking, request: T, response: HTTPURLResponse)
+    func responseBegan(request: NetworkRequest, response: HTTPURLResponse)
 }
 
 public protocol ResponseCompletedAction: Action {
@@ -38,5 +38,5 @@ public protocol ResponseCompletedAction: Action {
     ///   - responseBody: The body of the response.
     ///   - response: The response that was received.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the response from being received by the caller.
-    func responseReceived<T: Request>(network: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>)
+    func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>)
 }

@@ -15,12 +15,10 @@ struct AuthenticationAction {
 }
 
 extension AuthenticationAction: RequestWillBeginAction {
-    func requestWillBegin(_ request: URLRequest, completion: RequestActionClosure) {
+    func requestWillBegin(_ request: NetworkRequest, completion: (Result<NetworkRequest, Error>) -> Void) {
         var request = request
-        var headers = request.allHTTPHeaderFields ?? [:]
-        if !headers.keys.contains(CommonHeaders.authentication) {
-            headers[CommonHeaders.authentication] = String(describing: userDefauls.authentication)
-            request.allHTTPHeaderFields = headers
+        if request.requiresAuthentication {
+            request.headers[CommonHeaders.authentication] = String(describing: userDefauls.authentication)
         }
         completion(.success(request))
     }
@@ -66,4 +64,10 @@ extension AuthenticationAction: ResponseCompletedAction {
 
 private extension String {
     var boolValue: Bool { (self as NSString).boolValue }
+}
+
+private extension NetworkRequest {
+    var requiresAuthentication: Bool {
+        customProperties[CustomPropertyKeys.requiresAuthentication] as? Bool ?? false
+    }
 }

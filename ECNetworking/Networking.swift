@@ -54,15 +54,18 @@ extension Network: Networking {
     public func add(action: Action) {
         actions.append(action)
     }
-    
 
     public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, NetworkError>) -> Void)?) {
-        requestWillBeginActions.requestWillBegin(with: request) { result in
+        var networkRequest = request.buildRequest(with: configuration.baseURL)
+        networkRequest.customProperties = request.customProperties
+        
+        requestWillBeginActions.requestWillBegin(with: networkRequest) { result in
             switch result {
-            case .failure(let error):
+            case .failure:
                 completionHandler?(.failure(.unknown))
-            case .success(let request):
-                let urlRequest = URLRequest(request: request, baseURL: configuration.baseURL)
+            case .success(let networkRequest):
+                
+                let urlRequest = networkRequest.asURLRequest()
                 
                 requestBeganActions.requestBegan(request: urlRequest)
                 
@@ -79,7 +82,7 @@ extension Network: Networking {
                         return
                     }
                     
-                    self.responseBeganActions.responseBegan(network: self, request: request, response: response)
+                    self.responseBeganActions.responseBegan(request: networkRequest, response: response)
                     
                     if let networkError = NetworkError(rawValue: response.statusCode) {
                         completionHandler?(.failure(networkError))
@@ -92,9 +95,9 @@ extension Network: Networking {
                             return
                     }
                     
-                    self.responseCompletedActions.responseReceived(sender: self, request: request, responseBody: responseBody, response: response) { result in
+                    self.responseCompletedActions.responseReceived(request: request, responseBody: responseBody, response: response) { result in
                         switch result {
-                        case .failure(let error):
+                        case .failure:
                             completionHandler?(.failure(.unknown))
                         case .success(let newResponse):
                             completionHandler?(.success(newResponse))

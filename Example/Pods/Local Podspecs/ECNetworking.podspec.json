@@ -1,8 +1,8 @@
 {
   "name": "ECNetworking",
   "version": "0.1.0",
-  "summary": "A short description of ECNetworking.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "A library with a simple interface for sending, receiving & managing requests.",
+  "description": "A library with a simple interface for sending, receiving & managing requests.\n                        Creating requests and defining what their response looks like can be done in a few lines.\n                        Managing complicated workflows like authentication is made easy with request Actions",
   "homepage": "https://github.com/EvanCooper9/ECNetworking",
   "license": {
     "type": "MIT",
@@ -15,8 +15,11 @@
     "git": "https://github.com/EvanCooper9/ECNetworking.git",
     "tag": "0.1.0"
   },
+  "social_media_url": "https://evancooper.tech",
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "ECNetworking/**/*"
+  "swift_versions": "5.0",
+  "source_files": "ECNetworking/**/*",
+  "swift_version": "5.0"
 }

@@ -12,6 +12,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		7C39B9D024857FD4001973AF /* NetworkRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C39B9CF24857FD4001973AF /* NetworkRequest+Extensions.swift */; };
+		7C39B9D22485866F001973AF /* CustomPropertyKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C39B9D12485866F001973AF /* CustomPropertyKeys.swift */; };
 		7C42B03C24676ACD00FFDBC2 /* SampleGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */; };
 		7C42B07B2469B88600FFDBC2 /* AuthenticationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B07A2469B88600FFDBC2 /* AuthenticationAction.swift */; };
 		7C42B07D2469B8E800FFDBC2 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */; };
@@ -44,6 +46,8 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ECNetworking_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECNetworking_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C39B9CF24857FD4001973AF /* NetworkRequest+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkRequest+Extensions.swift"; sourceTree = "<group>"; };
+		7C39B9D12485866F001973AF /* CustomPropertyKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPropertyKeys.swift; sourceTree = "<group>"; };
 		7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleGetRequest.swift; sourceTree = "<group>"; };
 		7C42B07A2469B88600FFDBC2 /* AuthenticationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAction.swift; sourceTree = "<group>"; };
 		7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRequest.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				7C42B0792469B87100FFDBC2 /* Actions */,
+				7C39B9CE24857FAE001973AF /* Extensions */,
 				7C42B03A24676AC000FFDBC2 /* Requests */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
@@ -155,12 +160,21 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		7C39B9CE24857FAE001973AF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7C39B9CF24857FD4001973AF /* NetworkRequest+Extensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		7C42B03A24676AC000FFDBC2 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
 				7C42B03B24676ACD00FFDBC2 /* SampleGetRequest.swift */,
 				7C42B07C2469B8E800FFDBC2 /* AuthenticationRequest.swift */,
 				7C42B0802469BDB200FFDBC2 /* CommonHeaders.swift */,
+				7C39B9D12485866F001973AF /* CustomPropertyKeys.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -362,6 +376,8 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				7C42B07B2469B88600FFDBC2 /* AuthenticationAction.swift in Sources */,
+				7C39B9D024857FD4001973AF /* NetworkRequest+Extensions.swift in Sources */,
+				7C39B9D22485866F001973AF /* CustomPropertyKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

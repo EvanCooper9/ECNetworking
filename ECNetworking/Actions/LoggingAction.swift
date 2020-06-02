@@ -28,7 +28,7 @@ extension LoggingAction: RequestBeganAction {
 }
 
 extension LoggingAction: ResponseBeganAction {
-    public func responseBegan<T: Request>(network: Networking, request: T, response: HTTPURLResponse) {
+    func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
         print(description(response: response))
     }
     
@@ -41,7 +41,7 @@ extension LoggingAction: ResponseBeganAction {
 }
 
 extension LoggingAction: ResponseCompletedAction {
-    public func responseReceived<T: Request>(network: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
+    public func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
         if let responseBody = responseBody as? Encodable,
             let responseDescription = description(for: responseBody, response: response) {
                 print(responseDescription)

@@ -1,5 +1,5 @@
 extension Array where Element == RequestWillBeginAction {
-    func requestWillBegin<T: Request>(with request: T, completion: (Result<T, Error>) -> Void) {
+    func requestWillBegin(with request: NetworkRequest, completion: (Result<NetworkRequest, Error>) -> Void) {
         guard let first = first else {
             completion(.success(request))
             return
@@ -24,25 +24,25 @@ extension Array where Element == RequestBeganAction {
 }
 
 extension Array where Element == ResponseBeganAction {
-    func responseBegan<T: Request>(network: Networking, request: T, response: HTTPURLResponse) {
-        forEach { $0.responseBegan(network: network, request: request, response: response) }
+    func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
+        forEach { $0.responseBegan(request: request, response: response) }
     }
 }
 
 extension Array where Element == ResponseCompletedAction {
-    func responseReceived<T: Request>(sender: Networking, request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping (Result<T.Response, Error>) -> Void) {
+    func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping (Result<T.Response, Error>) -> Void) {
         guard let first = first else {
             completion(.success(responseBody))
             return
         }
         
-        first.responseReceived(network: sender, request: request, responseBody: responseBody, response: response) { result in
+        first.responseReceived(request: request, responseBody: responseBody, response: response) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let newResponseBody):
                 let remaining = Array(self.dropFirst())
-                remaining.responseReceived(sender: sender, request: request, responseBody: newResponseBody, response: response, completion: completion)
+                remaining.responseReceived(request: request, responseBody: newResponseBody, response: response, completion: completion)
             }
         }
     }
