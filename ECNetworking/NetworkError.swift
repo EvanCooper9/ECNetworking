@@ -5,6 +5,7 @@ public enum NetworkError: Int, Error {
     case unauthorized = 401
     case forbidden = 403
     case notFound = 404
+    case unprocessible = 422
     
     // HTTP 500s
     case internalServer = 500
