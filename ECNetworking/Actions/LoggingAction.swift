@@ -44,13 +44,17 @@ extension LoggingAction: ResponseCompletedAction {
     
     func responseReceived(request: NetworkRequest, result: NetworkResult, completion: @escaping (Result<NetworkResult, Error>) -> Void) {
         switch result {
-        case .failure:
-            break
+        case .failure(let response, let error):
+            printResponseData(data: response.data)
         case .success(let response):
-            if let data = response.data, let dataString = String(data: data, encoding: .utf8) {
-                print("Data: \(dataString)")
-            }
+            printResponseData(data: response.data)
         }
         completion(.success(result))
+    }
+    
+    private func printResponseData(data: Data?) {
+        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+            print("Data: \(dataString)")
+        }
     }
 }
