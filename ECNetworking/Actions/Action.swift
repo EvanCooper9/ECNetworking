@@ -28,7 +28,7 @@ public protocol ResponseBeganAction: Action {
 
 public protocol ResponseCompletedAction: Action {
     
-    typealias ResponseActionClosure<T: Request> = (Result<T.Response, Error>) -> Void
+    typealias ResponseActionClosure<T: Request> = (Result<NetworkResult, Error>) -> Void
     
     /// Called after a request is received. Provides an opportunity to modify or manage a response before passing it to the caller.
     /// - Note: `completion` must be called, or else responses will hang.
@@ -38,5 +38,5 @@ public protocol ResponseCompletedAction: Action {
     ///   - responseBody: The body of the response.
     ///   - response: The response that was received.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the response from being received by the caller.
-    func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>)
+    func responseReceived(request: NetworkRequest, result: NetworkResult, completion: @escaping (Result<NetworkResult, Error>) -> Void)
 }

@@ -30,19 +30,20 @@ extension Array where Element == ResponseBeganAction {
 }
 
 extension Array where Element == ResponseCompletedAction {
-    func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping (Result<T.Response, Error>) -> Void) {
+    
+    func responseReceived(request: NetworkRequest, result: NetworkResult, completion: @escaping (Result<NetworkResult, Error>) -> Void) {
         guard let first = first else {
-            completion(.success(responseBody))
+            completion(.success(result))
             return
         }
         
-        first.responseReceived(request: request, responseBody: responseBody, response: response) { result in
+        first.responseReceived(request: request, result: result) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let newResponseBody):
+            case .success(let result):
                 let remaining = Array(self.dropFirst())
-                remaining.responseReceived(request: request, responseBody: newResponseBody, response: response, completion: completion)
+                remaining.responseReceived(request: request, result: result, completion: completion)
             }
         }
     }

@@ -1,10 +1,11 @@
 public protocol Networking {
     func add(action: Action)
-    func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, NetworkError>) -> Void)?)
+    func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?)
+    func send(request: NetworkRequest, completionHandler: ((Result<NetworkResult, Error>) -> Void)?)
 }
 
 extension Networking {
-    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, NetworkError>) -> Void)? = nil) {
+    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)? = nil) {
         send(request, completionHandler: completionHandler)
     }
 }
@@ -55,57 +56,106 @@ extension Network: Networking {
         actions.append(action)
     }
 
-    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, NetworkError>) -> Void)?) {
+    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) {
         var networkRequest = request.buildRequest(with: configuration.baseURL)
         networkRequest.customProperties = request.customProperties
         
         requestWillBeginActions.requestWillBegin(with: networkRequest) { result in
             switch result {
             case .failure:
-                completionHandler?(.failure(.unknown))
+                completionHandler?(.failure(NetworkError.unknown))
             case .success(let networkRequest):
                 
                 let urlRequest = networkRequest.asURLRequest()
                 
-                requestBeganActions.requestBegan(request: urlRequest)
-                
                 let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
                     
-                    if error != nil {
-                        completionHandler?(.failure(.unknown))
-                        return
+                    let result: NetworkResult
+                    
+                    if let response = response as? HTTPURLResponse {
+                        let networkResponse = NetworkResponse(response: response, data: data)
+                        if let error = error {
+                            result = .failure(networkResponse, error)
+                        } else if let networkError = NetworkError(rawValue: response.statusCode) {
+                            result = .failure(networkResponse, networkError)
+                        } else {
+                            result = .success(networkResponse)
+                        }
+                        
+                        self.responseBeganActions.responseBegan(request: networkRequest, response: response)
+                    } else {
+                        result = .failure(.init(response: HTTPURLResponse(), data: data), error ?? NetworkError.unknown)
                     }
                     
-                    guard let response = response as? HTTPURLResponse else {
-                        completionHandler?(.failure(.unknown))
-                        return
-                    }
-                    
-                    self.responseBeganActions.responseBegan(request: networkRequest, response: response)
-                    
-                    if let networkError = NetworkError(rawValue: response.statusCode) {
-                        completionHandler?(.failure(networkError))
-                        return
-                    }
-                    
-                    guard let data = data,
-                        let responseBody = try? request.response(from: data, with: self.decoder) else {
-                            completionHandler?(.failure(.unknown))
-                            return
-                    }
-                    
-                    self.responseCompletedActions.responseReceived(request: request, responseBody: responseBody, response: response) { result in
+                    self.responseCompletedActions.responseReceived(request: networkRequest, result: result) { result in
                         switch result {
-                        case .failure:
-                            completionHandler?(.failure(.unknown))
-                        case .success(let newResponse):
-                            completionHandler?(.success(newResponse))
+                        case .failure(let error):
+                            completionHandler?(.failure(error))
+                        case .success(let result):
+                            switch result {
+                            case .failure(let response, let error):
+                                completionHandler?(.failure(error))
+                            case .success(let response):
+                                if let data = response.data, let responseBody = try? request.response(from: data, with: self.decoder) {
+                                    completionHandler?(.success(responseBody))
+                                } else {
+                                    completionHandler?(.failure(NetworkError.unknown))
+                                }
+                            }
                         }
                     }
                 }
                 
                 task.resume()
+                requestBeganActions.requestBegan(request: urlRequest)
+            }
+        }
+    }
+    
+    public func send(request: NetworkRequest, completionHandler: ((Result<NetworkResult, Error>) -> Void)?) {
+        let urlRequest = request.asURLRequest()
+        
+        requestWillBeginActions.requestWillBegin(with: request) { result in
+            switch result {
+            case .failure:
+                completionHandler?(.failure(NetworkError.unknown))
+            case .success(let networkRequest):
+                
+                let urlRequest = networkRequest.asURLRequest()
+                
+                let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
+                    guard let self = self else { return }
+                    
+                    let result: NetworkResult
+                    
+                    if let response = response as? HTTPURLResponse {
+                        let networkResponse = NetworkResponse(response: response, data: data)
+                        if let error = error {
+                            result = .failure(networkResponse, error)
+                        } else if let networkError = NetworkError(rawValue: response.statusCode) {
+                            result = .failure(networkResponse, networkError)
+                        } else {
+                            result = .success(networkResponse)
+                        }
+                        
+                        self.responseBeganActions.responseBegan(request: networkRequest, response: response)
+                    } else {
+                        result = .failure(.init(response: HTTPURLResponse(), data: data), error ?? NetworkError.unknown)
+                    }
+                    
+                    self.responseCompletedActions.responseReceived(request: networkRequest, result: result) { result in
+                        switch result {
+                        case .failure(let error):
+                            completionHandler?(.failure(error))
+                        case .success(let response):
+                            completionHandler?(.success(response))
+                        }
+                    }
+                }
+                
+                task.resume()
+                requestBeganActions.requestBegan(request: urlRequest)
             }
         }
     }

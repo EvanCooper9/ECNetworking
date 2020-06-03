@@ -41,18 +41,16 @@ extension LoggingAction: ResponseBeganAction {
 }
 
 extension LoggingAction: ResponseCompletedAction {
-    public func responseReceived<T: Request>(request: T, responseBody: T.Response, response: HTTPURLResponse, completion: @escaping ResponseActionClosure<T>) {
-        if let responseBody = responseBody as? Encodable,
-            let responseDescription = description(for: responseBody, response: response) {
-                print(responseDescription)
-        }
-        completion(.success(responseBody))
-    }
     
-    private func description(for responseBody: Encodable, response: HTTPURLResponse) -> String? {
-        if let dataString = try? responseBody.encodedToString() {
-            return "Data: \(dataString)"
+    func responseReceived(request: NetworkRequest, result: NetworkResult, completion: @escaping (Result<NetworkResult, Error>) -> Void) {
+        switch result {
+        case .failure:
+            break
+        case .success(let response):
+            if let data = response.data, let dataString = String(data: data, encoding: .utf8) {
+                print("Data: \(dataString)")
+            }
         }
-        return nil
+        completion(.success(result))
     }
 }
