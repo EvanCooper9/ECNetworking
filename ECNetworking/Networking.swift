@@ -62,8 +62,8 @@ extension Network: Networking {
         
         requestWillBeginActions.requestWillBegin(with: networkRequest) { result in
             switch result {
-            case .failure:
-                completionHandler?(.failure(NetworkError.unknown))
+            case .failure(let error):
+                completionHandler?(.failure(error))
             case .success(let networkRequest):
                 
                 let urlRequest = networkRequest.asURLRequest()
