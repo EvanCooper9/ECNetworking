@@ -1,6 +1,6 @@
 public protocol Networking {
     func add(action: Action)
-    func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?)
+    @discardableResult func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) -> URLSessionDataTask?
     func send(request: NetworkRequest, completionHandler: ((Result<NetworkResult, Error>) -> Void)?)
 }
 
@@ -17,6 +17,7 @@ public final class Network {
     private var actions: [Action]
     private let configuration: NetworkConfiguration
     private let decoder: JSONDecoder
+    private let encoder: JSONEncoder
     private let session: URLSession
     
     private var requestWillBeginActions: [RequestWillBeginAction] {
@@ -37,10 +38,11 @@ public final class Network {
 
     // MARK: - Lifecycle
     
-    public init(actions: [Action] = [], configuration: NetworkConfiguration, decoder: JSONDecoder = JSONDecoder(), session: URLSession = .shared) {
+    public init(actions: [Action] = [], configuration: NetworkConfiguration, decoder: JSONDecoder = JSONDecoder(), encoder: JSONEncoder = JSONEncoder(), session: URLSession = .shared) {
         self.actions = actions
         self.configuration = configuration
         self.decoder = decoder
+        self.encoder = encoder
         self.session = session
         
         guard configuration.logging else { return }
@@ -56,9 +58,12 @@ extension Network: Networking {
         actions.append(action)
     }
 
-    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) {
+    @discardableResult
+    public func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) -> URLSessionDataTask? {
         var networkRequest = request.buildRequest(with: configuration.baseURL)
         networkRequest.customProperties = request.customProperties
+        
+        var task: URLSessionDataTask?
         
         requestWillBeginActions.requestWillBegin(with: networkRequest) { result in
             switch result {
@@ -66,9 +71,9 @@ extension Network: Networking {
                 completionHandler?(.failure(error))
             case .success(let networkRequest):
                 
-                let urlRequest = networkRequest.asURLRequest()
+                let urlRequest = networkRequest.asURLRequest(with: encoder)
                 
-                let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
+                task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
                     
                     let result: NetworkResult
@@ -77,7 +82,7 @@ extension Network: Networking {
                         let networkResponse = NetworkResponse(response: response, data: data)
                         if let error = error {
                             result = .failure(networkResponse, error)
-                        } else if let networkError = NetworkError(rawValue: response.statusCode) {
+                        } else if let networkError = NetworkError(from: response.statusCode, data: data) {
                             result = .failure(networkResponse, networkError)
                         } else {
                             result = .success(networkResponse)
@@ -97,8 +102,13 @@ extension Network: Networking {
                             case .failure(let response, let error):
                                 completionHandler?(.failure(error))
                             case .success(let response):
-                                if let data = response.data, let responseBody = try? request.response(from: data, with: self.decoder) {
-                                    completionHandler?(.success(responseBody))
+                                if let data = response.data {
+                                    do {
+                                        let responseBody = try request.response(from: data, with: self.decoder)
+                                        completionHandler?(.success(responseBody))
+                                    } catch {
+                                        completionHandler?(.failure(error))
+                                    }
                                 } else {
                                     completionHandler?(.failure(NetworkError.unknown))
                                 }
@@ -107,22 +117,21 @@ extension Network: Networking {
                     }
                 }
                 
-                task.resume()
+                task?.resume()
                 requestBeganActions.requestBegan(request: urlRequest)
             }
         }
+        return task
     }
     
     public func send(request: NetworkRequest, completionHandler: ((Result<NetworkResult, Error>) -> Void)?) {
-        let urlRequest = request.asURLRequest()
-        
         requestWillBeginActions.requestWillBegin(with: request) { result in
             switch result {
             case .failure:
                 completionHandler?(.failure(NetworkError.unknown))
             case .success(let networkRequest):
                 
-                let urlRequest = networkRequest.asURLRequest()
+                let urlRequest = networkRequest.asURLRequest(with: encoder)
                 
                 let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
@@ -133,7 +142,7 @@ extension Network: Networking {
                         let networkResponse = NetworkResponse(response: response, data: data)
                         if let error = error {
                             result = .failure(networkResponse, error)
-                        } else if let networkError = NetworkError(rawValue: response.statusCode) {
+                        } else if let networkError = NetworkError(from: response.statusCode, data: data) {
                             result = .failure(networkResponse, networkError)
                         } else {
                             result = .success(networkResponse)

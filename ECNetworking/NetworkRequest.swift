@@ -24,12 +24,12 @@ public struct NetworkRequest {
 }
 
 extension NetworkRequest {
-    func asURLRequest() -> URLRequest {
+    func asURLRequest(with encoder: JSONEncoder) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = headers
         
-        if let data = try? body?.encoded() {
+        if let data = try? body?.encoded(using: encoder) {
             request.httpBody = data
         }
         

@@ -46,6 +46,7 @@ extension LoggingAction: ResponseCompletedAction {
         switch result {
         case .failure(let response, let error):
             printResponseData(data: response.data)
+            print("Error: \(error.localizedDescription)")
         case .success(let response):
             printResponseData(data: response.data)
         }
