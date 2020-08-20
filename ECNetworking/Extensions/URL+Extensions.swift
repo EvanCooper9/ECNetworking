@@ -11,12 +11,13 @@ extension Bool: QueryParameterValue {
 }
 
 public extension URL {
-    func appendingQueryParameters(_ queryParameters: [String: QueryParameterValue]) -> Self {
+    func appendingQueryParameters(_ queryParameters: [String: QueryParameterValue?]) -> Self {
         guard var urlComponents = URLComponents(string: self.absoluteString) else { return self }
         
         var queryItems: [URLQueryItem] = urlComponents.queryItems ??  []
 
         queryParameters.forEach { key, value in
+            guard let value = value else { return }
             let queryItem = URLQueryItem(name: key, value: value.stringValue())
             queryItems.append(queryItem)
         }
