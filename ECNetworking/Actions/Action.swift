@@ -6,7 +6,7 @@ public protocol RequestWillBeginAction: Action {
     /// - Parameters:
     ///   - request: The request that will be sent.
     ///   - completion: A closure that captures the result of this action. Failures will prevent the request from being sent.
-    func requestWillBegin(_ request: NetworkRequest, completion: (Result<NetworkRequest, Error>) -> Void)
+    func requestWillBegin(_ request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void)
 }
 
 public protocol RequestBeganAction: Action {

@@ -1,5 +1,5 @@
 extension Array where Element == RequestWillBeginAction {
-    func requestWillBegin(with request: NetworkRequest, completion: (Result<NetworkRequest, Error>) -> Void) {
+    func requestWillBegin(with request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
         guard let first = first else {
             completion(.success(request))
             return
@@ -10,7 +10,7 @@ extension Array where Element == RequestWillBeginAction {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let request):
-                let remaining = Array(dropFirst())
+                let remaining = Array(self.dropFirst())
                 remaining.requestWillBegin(with: request, completion: completion)
             }
         }

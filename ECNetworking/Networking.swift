@@ -71,9 +71,9 @@ extension Network: Networking {
                 completionHandler?(.failure(error))
             case .success(let networkRequest):
                 
-                let urlRequest = networkRequest.asURLRequest(with: encoder)
+                let urlRequest = networkRequest.asURLRequest(with: self.encoder)
                 
-                task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
+                task = self.session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
                     
                     let result: NetworkResult
@@ -118,7 +118,7 @@ extension Network: Networking {
                 }
                 
                 task?.resume()
-                requestBeganActions.requestBegan(request: urlRequest)
+                self.requestBeganActions.requestBegan(request: urlRequest)
             }
         }
         return task
@@ -131,9 +131,9 @@ extension Network: Networking {
                 completionHandler?(.failure(NetworkError.unknown))
             case .success(let networkRequest):
                 
-                let urlRequest = networkRequest.asURLRequest(with: encoder)
+                let urlRequest = networkRequest.asURLRequest(with: self.encoder)
                 
-                let task = session.dataTask(with: urlRequest) { [weak self] data, response, error in
+                let task = self.session.dataTask(with: urlRequest) { [weak self] data, response, error in
                     guard let self = self else { return }
                     
                     let result: NetworkResult
@@ -164,7 +164,7 @@ extension Network: Networking {
                 }
                 
                 task.resume()
-                requestBeganActions.requestBegan(request: urlRequest)
+                self.requestBeganActions.requestBegan(request: urlRequest)
             }
         }
     }
