@@ -1,16 +1,23 @@
 PODS:
-  - ECNetworking (0.1.0)
+  - ECNetworking (0.1.0):
+    - RxSwift
+  - RxSwift (5.1.1)
 
 DEPENDENCIES:
   - ECNetworking (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - RxSwift
 
 EXTERNAL SOURCES:
   ECNetworking:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ECNetworking: 5d7658a4b836a825bac1b53e47d283b561129dbb
+  ECNetworking: aed4c02a13a6eb0026c5feda5ff72abd460938c6
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
 PODFILE CHECKSUM: ddedfb1d24624134714c091cc907613060e28f53
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

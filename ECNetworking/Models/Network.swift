@@ -87,7 +87,7 @@ extension Network: Networking {
                             completionHandler?(.failure(error))
                         case .success(let result):
                             switch result {
-                            case .failure(let response, let error):
+                            case .failure(_, let error):
                                 completionHandler?(.failure(error))
                             case .success(let response):
                                 if let data = response.data {

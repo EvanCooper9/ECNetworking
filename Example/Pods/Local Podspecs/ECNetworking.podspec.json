@@ -19,7 +19,12 @@
   "platforms": {
     "ios": "11.0"
   },
-  "swift_versions": "5.0",
+  "swift_versions": "5.3",
   "source_files": "ECNetworking/**/*",
-  "swift_version": "5.0"
+  "dependencies": {
+    "RxSwift": [
+
+    ]
+  },
+  "swift_version": "5.3"
 }
