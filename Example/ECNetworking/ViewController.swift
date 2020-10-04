@@ -5,10 +5,15 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private lazy var requestSender: Networking = {
+    private lazy var network: Networking = {
         let configuration = NetworkConfiguration(
             baseURL: URL(string: "https://postman-echo.com")!,
             logging: true
+        )
+        
+        let network = Network(
+            actions: [LoggingAction()],
+            configuration: configuration
         )
         
         return Network(configuration: configuration)
@@ -16,20 +21,11 @@ class ViewController: UIViewController {
     
     private let userDefaults: UserDefaults = .standard
     
-    // MARK: - Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let authenticationAction = AuthenticationAction(userDefaults: userDefaults)
-        requestSender.add(action: authenticationAction)
-    }
-    
     // MARK: - Private Methods
     
     @IBAction private func sendRequestButtonTapped(_ sender: Any) {
         let request = SampleGetRequest()
-        requestSender.send(request) { result in
+        network.send(request) { result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

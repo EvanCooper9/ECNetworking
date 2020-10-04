@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/EvanCooper9/ECNetworking.git', :tag => s.version.to_s }
   s.social_media_url = 'https://evancooper.tech'
   s.ios.deployment_target = '11.0'
-  s.swift_version = '5.0'
+  s.swift_version = '5.3'
   s.source_files = 'ECNetworking/**/*'
   s.dependency 'RxSwift'
 end

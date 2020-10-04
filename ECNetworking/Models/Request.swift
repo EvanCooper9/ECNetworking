@@ -8,6 +8,10 @@ public protocol Request: Encodable {
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response
 }
 
+public extension Request {
+    var customProperties: [AnyHashable : Any] { [:] }
+}
+
 extension Request where Response: Decodable {
     public func response(from data: Data, with decoder: JSONDecoder) throws -> Response {
         return try decoder.decode(Response.self, from: data)

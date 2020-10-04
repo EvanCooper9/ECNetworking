@@ -9,14 +9,10 @@ struct SampleGetResponse: Codable {
 struct SampleGetRequest {}
 
 extension SampleGetRequest: Request {
-
+    
     typealias Response = SampleGetResponse
     
-    var customProperties: [AnyHashable : Any] {
-        [CustomPropertyKeys.requiresAuthentication: true]
-    }
-    
-    func bulidRequest(with baseURL: URL) -> NetworkRequest {
+    func buildRequest(with baseURL: URL) -> NetworkRequest {
         let url = baseURL
             .appendingPathComponent("get")
             .appendingQueryParameters([
