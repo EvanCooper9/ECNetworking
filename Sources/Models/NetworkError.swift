@@ -1,3 +1,5 @@
+import Foundation
+
 public enum NetworkError: LocalizedError {
     
     struct Detail: Decodable {

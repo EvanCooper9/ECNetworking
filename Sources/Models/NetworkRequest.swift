@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NetworkRequest {
     
     public enum Method: String {

@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://evancooper.tech'
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.3'
-  s.source_files = 'ECNetworking/**/*'
+  s.source_files = 'Sources/**/*'
   s.dependency 'RxSwift'
 end

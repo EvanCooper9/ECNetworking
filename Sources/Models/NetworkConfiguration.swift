@@ -1,3 +1,5 @@
+import Foundation
+
 public struct NetworkConfiguration {
     let baseURL: URL
     let logging: Bool

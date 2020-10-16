@@ -1,3 +1,5 @@
+import Foundation
+
 extension Array where Element == RequestWillBeginAction {
     func requestWillBegin(with request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
         guard let first = first else {

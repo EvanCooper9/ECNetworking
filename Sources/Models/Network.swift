@@ -1,3 +1,5 @@
+import Foundation
+
 public final class Network {
     
     // MARK: - Private Properties

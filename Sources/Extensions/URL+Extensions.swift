@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol QueryParameterValue {
     func stringValue() -> String
 }

@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol Networking {
     func add(action: Action)
     @discardableResult func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) -> URLSessionDataTask?

@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol Request: Encodable {
     
     associatedtype Response
