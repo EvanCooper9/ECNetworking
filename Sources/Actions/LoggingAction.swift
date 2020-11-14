@@ -1,3 +1,5 @@
+import Foundation
+
 struct LoggingAction {}
 
 extension LoggingAction: RequestBeganAction {

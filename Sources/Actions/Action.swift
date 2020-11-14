@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol Action {}
 
 public protocol RequestWillBeginAction: Action {
