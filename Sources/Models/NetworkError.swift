@@ -2,12 +2,9 @@ import Foundation
 
 public enum NetworkError: LocalizedError {
     
-    struct Detail: Decodable {
-        let errors: [String]
-    }
-    
     // HTTP 400s
     case badRequest(Data?)
+    case paymentRequired(Data?)
     case unauthorized(Data?)
     case forbidden(Data?)
     case notFound(Data?)
@@ -22,6 +19,7 @@ public enum NetworkError: LocalizedError {
         switch statusCode {
         case 400: self = .badRequest(data)
         case 401: self = .unauthorized(data)
+        case 402: self = .paymentRequired(data)
         case 403: self = .forbidden(data)
         case 404: self = .notFound(data)
         case 422: self = .unprocessible(data)
@@ -30,26 +28,18 @@ public enum NetworkError: LocalizedError {
         }
     }
     
-    public var errorDescription: String? { localizedDescription }
-    
-    public var localizedDescription: String {
+    public var data: Data? {
         switch self {
         case .badRequest(let data),
              .unauthorized(let data),
+             .paymentRequired(let data),
              .forbidden(let data),
              .notFound(let data),
              .unprocessible(let data):
-            
-            guard let data = data else {
-                return "Unknown network error."
-            }
-            
-            let detail = try? JSONDecoder().decode(Detail.self, from: data)
-            return detail?.errors.first ?? "Unknown network error"
-        case .internalServer:
-            return "Server error."
-        case .unknown:
-            return "Unknown network error."
+            return data
+        case .internalServer,
+             .unknown:
+            return nil
         }
     }
 }
