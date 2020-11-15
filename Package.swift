@@ -10,13 +10,11 @@ let package = Package(
             name: "ECNetworking",
             targets: ["ECNetworking"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact("6.0.0-rc.1"))
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "ECNetworking",
-            dependencies: ["RxSwift"],
+            dependencies: [],
             path: "Sources"),
         .testTarget(
             name: "ECNetworkingTests",

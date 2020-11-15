@@ -38,13 +38,3 @@ extension NetworkRequest {
         return request
     }
 }
-
-public enum NetworkResult {
-    case success(NetworkResponse)
-    case failure(NetworkResponse, Error)
-}
-
-public struct NetworkResponse {
-    public let response: HTTPURLResponse
-    public let data: Data?
-}

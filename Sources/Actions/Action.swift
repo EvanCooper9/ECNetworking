@@ -3,6 +3,7 @@ import Foundation
 public protocol Action {}
 
 public protocol RequestWillBeginAction: Action {
+    
     /// Called before a request will start. Provides an opportunity to modify a request before being sent
     /// - Note: `completion` must be called, or else requests will hang.
     /// - Parameters:
@@ -29,8 +30,6 @@ public protocol ResponseBeganAction: Action {
 }
 
 public protocol ResponseCompletedAction: Action {
-    
-    typealias ResponseActionClosure<T: Request> = (Result<NetworkResult, Error>) -> Void
     
     /// Called after a request is received. Provides an opportunity to modify or manage a response before passing it to the caller.
     /// - Note: `completion` must be called, or else responses will hang.
