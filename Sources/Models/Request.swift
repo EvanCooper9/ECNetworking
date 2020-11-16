@@ -4,14 +4,8 @@ public protocol Request: Encodable {
     
     associatedtype Response
     
-    var customProperties: [AnyHashable: Any] { get }
-    
     func buildRequest(with baseURL: URL) -> NetworkRequest
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response
-}
-
-extension Request {
-    public var customProperties: [AnyHashable: Any] { [:] }
 }
 
 extension Request where Response: Decodable {

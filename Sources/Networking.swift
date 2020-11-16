@@ -3,7 +3,7 @@ import Foundation
 public protocol Networking {
     func add(action: Action)
     @discardableResult func send<T: Request>(_ request: T, completionHandler: ((Result<T.Response, Error>) -> Void)?) -> URLSessionDataTask?
-    func send(request: NetworkRequest, completionHandler: ((Result<NetworkResult, Error>) -> Void)?)
+    @discardableResult func send(_ request: NetworkRequest, completionHandler: ((Result<NetworkResponse, Error>) -> Void)?) -> URLSessionDataTask?
 }
 
 extension Networking {

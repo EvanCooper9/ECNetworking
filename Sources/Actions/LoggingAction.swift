@@ -1,12 +1,6 @@
 import Foundation
 
-struct LoggingAction {}
-
-extension LoggingAction: RequestBeganAction {
-    func requestBegan(_ request: URLRequest) {
-        print(description(for: request))
-    }
-    
+struct LoggingAction {
     func description(for request: URLRequest) -> String {
         guard let url = request.url,
             let method = request.httpMethod,
@@ -27,19 +21,6 @@ extension LoggingAction: RequestBeganAction {
         description.append("\n---------- END REQUEST ----------\n")
         return description
     }
-}
-
-extension LoggingAction: ResponseCompletedAction {
-    
-    func responseReceived(request: NetworkRequest, result: NetworkResult, completion: @escaping (Result<NetworkResult, Error>) -> Void) {
-        switch result {
-        case .failure(let response, let error):
-            print(description(for: response, error: error))
-        case .success(let response):
-            print(description(for: response))
-        }
-        completion(.success(result))
-    }
     
     func description(for response: NetworkResponse, error: Error? = nil) -> String {
         var description = "\n---------- BEGIN RESPONSE ----------\n"
@@ -56,5 +37,18 @@ extension LoggingAction: ResponseCompletedAction {
         
         description.append("\n---------- END RESPONSE ----------\n")
         return description
+    }
+}
+
+extension LoggingAction: RequestBeganAction {
+    func requestBegan(_ request: URLRequest) {
+        print(description(for: request))
+    }
+}
+
+extension LoggingAction: ResponseCompletedAction {
+    func responseReceived(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void) {
+        print(description(for: response))
+        completion(.success(response))
     }
 }
