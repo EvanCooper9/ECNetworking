@@ -16,6 +16,8 @@ network.send(request) { result in
 
 ## Installation
 
+> Looking for an Rx version? Checkout [RxECNetworking](https://github.com/EvanCooper9/RxECNetworking)
+
 ### SPM
 ```swift
 .package(url: "https://github.com/EvanCooper9/ECNetworking", from: "1.0.0")

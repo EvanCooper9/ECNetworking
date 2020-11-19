@@ -36,5 +36,5 @@ public protocol ResponseCompletedAction: Action {
     ///   - response: the response that was received
     ///   - completion: A closure that captures the result of this action.
     /// - Note: Failing to call `completion` will result the response hanging.
-    func responseReceived(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void)
+    func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void)
 }

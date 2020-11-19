@@ -8,13 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ECNetworking'
-  s.version          = '0.1.0'
-  s.summary          = 'A library with a simple interface for sending, receiving & managing requests.'
-  s.description      = 'A library with a simple interface for sending, receiving & managing requests.
-                        Creating requests and defining what their response looks like can be done in a few lines.
-                        Managing complicated workflows like authentication is made easy with request Actions'
+  s.version          = '1.2.0'
+  s.summary          = 'A simple swifty networking layer. Supports custom interceptions'
+  s.description      = 'A simple swifty networking layer. Supports custom interceptions'
   s.homepage         = 'https://github.com/EvanCooper9/ECNetworking'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'EvanCooper9' => 'evan.cooper@rogers.com' }
   s.source           = { :git => 'https://github.com/EvanCooper9/ECNetworking.git', :tag => s.version.to_s }
@@ -22,5 +19,4 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.3'
   s.source_files = 'Sources/**/*'
-  s.dependency 'RxSwift'
 end
