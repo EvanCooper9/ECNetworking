@@ -42,7 +42,7 @@ extension Network: Networking {
             switch result {
             case .failure(let error):
                 completion?(.failure(error))
-            case .success(let response):
+            case .success(let response):                
                 guard let data = response.data else {
                     completion?(.failure(NetworkError.noData))
                     return

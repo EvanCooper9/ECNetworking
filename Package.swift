@@ -18,6 +18,7 @@ let package = Package(
             path: "Sources"),
         .testTarget(
             name: "ECNetworkingTests",
-            dependencies: ["ECNetworking"]),
+            dependencies: ["ECNetworking"],
+            path: "Tests"),
     ]
 )

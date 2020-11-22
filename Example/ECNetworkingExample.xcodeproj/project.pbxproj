@@ -20,6 +20,7 @@
 		7CDF0F532537DB1300C3200D /* ECNetworkingExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F522537DB1300C3200D /* ECNetworkingExampleTests.swift */; };
 		7CDF0F5E2537DB1300C3200D /* ECNetworkingExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */; };
 		7CDF0F772537DC3300C3200D /* ECNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7CDF0F762537DC3300C3200D /* ECNetworking */; };
+		7CED2F342568024100700A45 /* Request+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED2F332568024100700A45 /* Request+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECNetworkingExampleUITests.swift; sourceTree = "<group>"; };
 		7CDF0F5F2537DB1300C3200D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDF0F712537DB3E00C3200D /* ECNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECNetworking; path = ..; sourceTree = "<group>"; };
+		7CED2F332568024100700A45 /* Request+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				7C63B5A325603F50009E3A78 /* UserDefaults+Extensions.swift */,
+				7CED2F332568024100700A45 /* Request+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				7C63B5A425603F50009E3A78 /* UserDefaults+Extensions.swift in Sources */,
 				7C63B592256038E6009E3A78 /* AuthenticationRequest.swift in Sources */,
 				7C63B59B25603911009E3A78 /* AuthenticationAction.swift in Sources */,
+				7CED2F342568024100700A45 /* Request+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

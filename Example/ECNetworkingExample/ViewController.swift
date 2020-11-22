@@ -1,6 +1,4 @@
 import ECNetworking
-import RxECNetworking
-import RxSwift
 import UIKit
 
 class ViewController: UIViewController {
