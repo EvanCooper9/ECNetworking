@@ -19,3 +19,7 @@ extension Request where Response: Decodable {
 extension Request where Response == Void {
     public func response(from data: Data, with decoder: JSONDecoder) throws {}
 }
+
+public extension Request {
+    var customProperties: [AnyHashable: Any] { [:] }
+}

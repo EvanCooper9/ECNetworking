@@ -12,15 +12,14 @@
 		7C63B59B25603911009E3A78 /* AuthenticationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C63B59A25603911009E3A78 /* AuthenticationAction.swift */; };
 		7C63B5A425603F50009E3A78 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C63B5A325603F50009E3A78 /* UserDefaults+Extensions.swift */; };
 		7C63B5B52560429E009E3A78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C63B5B42560429E009E3A78 /* SceneDelegate.swift */; };
+		7C8A564025852E1300A0B039 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8A563F25852E1300A0B039 /* Assets.xcassets */; };
 		7CDF0F3C2537DB1100C3200D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F3B2537DB1100C3200D /* AppDelegate.swift */; };
 		7CDF0F402537DB1100C3200D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F3F2537DB1100C3200D /* ViewController.swift */; };
 		7CDF0F432537DB1100C3200D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDF0F412537DB1100C3200D /* Main.storyboard */; };
-		7CDF0F452537DB1200C3200D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDF0F442537DB1200C3200D /* Assets.xcassets */; };
 		7CDF0F482537DB1200C3200D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDF0F462537DB1200C3200D /* LaunchScreen.storyboard */; };
 		7CDF0F532537DB1300C3200D /* ECNetworkingExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F522537DB1300C3200D /* ECNetworkingExampleTests.swift */; };
 		7CDF0F5E2537DB1300C3200D /* ECNetworkingExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */; };
 		7CDF0F772537DC3300C3200D /* ECNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7CDF0F762537DC3300C3200D /* ECNetworking */; };
-		7CED2F342568024100700A45 /* Request+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED2F332568024100700A45 /* Request+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,11 +45,11 @@
 		7C63B59A25603911009E3A78 /* AuthenticationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAction.swift; sourceTree = "<group>"; };
 		7C63B5A325603F50009E3A78 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		7C63B5B42560429E009E3A78 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7C8A563F25852E1300A0B039 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CDF0F382537DB1100C3200D /* ECNetworkingExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECNetworkingExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDF0F3B2537DB1100C3200D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDF0F3F2537DB1100C3200D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7CDF0F422537DB1100C3200D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7CDF0F442537DB1200C3200D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CDF0F472537DB1200C3200D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7CDF0F492537DB1200C3200D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDF0F4E2537DB1300C3200D /* ECNetworkingExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECNetworkingExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +59,6 @@
 		7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECNetworkingExampleUITests.swift; sourceTree = "<group>"; };
 		7CDF0F5F2537DB1300C3200D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDF0F712537DB3E00C3200D /* ECNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECNetworking; path = ..; sourceTree = "<group>"; };
-		7CED2F332568024100700A45 /* Request+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				7C63B5A325603F50009E3A78 /* UserDefaults+Extensions.swift */,
-				7CED2F332568024100700A45 /* Request+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -147,8 +144,8 @@
 				7C63B5A225603F43009E3A78 /* Extensions */,
 				7C63B590256038D9009E3A78 /* Requests */,
 				7CDF0F412537DB1100C3200D /* Main.storyboard */,
-				7CDF0F442537DB1200C3200D /* Assets.xcassets */,
 				7CDF0F462537DB1200C3200D /* LaunchScreen.storyboard */,
+				7C8A563F25852E1300A0B039 /* Assets.xcassets */,
 				7CDF0F492537DB1200C3200D /* Info.plist */,
 			);
 			path = ECNetworkingExample;
@@ -286,7 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDF0F482537DB1200C3200D /* LaunchScreen.storyboard in Resources */,
-				7CDF0F452537DB1200C3200D /* Assets.xcassets in Resources */,
+				7C8A564025852E1300A0B039 /* Assets.xcassets in Resources */,
 				7CDF0F432537DB1100C3200D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,7 +316,6 @@
 				7C63B5A425603F50009E3A78 /* UserDefaults+Extensions.swift in Sources */,
 				7C63B592256038E6009E3A78 /* AuthenticationRequest.swift in Sources */,
 				7C63B59B25603911009E3A78 /* AuthenticationAction.swift in Sources */,
-				7CED2F342568024100700A45 /* Request+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
