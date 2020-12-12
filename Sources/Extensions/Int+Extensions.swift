@@ -5,40 +5,28 @@ extension Int {
     public static let forbidden = 403
     public static let notFound = 404
     public static let methodNotAllowed = 405
+    public static let notAcceptable = 406
+    public static let proxyAuthenticationRequired = 407
+    public static let requestTimeout = 408
+    public static let conflic = 409
+    public static let gone = 410
+    public static let lengthRequired = 411
+    public static let preconditionFailed = 412
+    public static let requestEntityTooLarge = 413
+    public static let requestUTITooLong = 414
+    public static let unsupportedMediaType = 415
+    public static let requestedRangeNotSatisfiable = 416
+    public static let expectationFailed = 417
+    public static let unprocessableEntity = 422
+    public static let locked = 423
+    public static let failedDependency = 424
+    public static let upgradeRequired = 426
+    public static let preconditionRequired = 428
+    public static let tooManyRequests = 429
+    public static let requestHeaderFieldsTooLarge = 431
+    public static let noResponse = 444
+    public static let retryWith = 449
+    public static let clientClosedRequest = 499
     
     public static let internalServer = 500
-    
-//   400 Bad Request
-//   401 Unauthorized
-//   402 Payment Required
-//   403 Forbidden
-//   404 Not Found
-//   405 Method Not Allowed
-//   406 Not Acceptable
-//   407 Proxy Authentication Required
-//   408 Request Timeout
-//   409 Conflict
-//   410 Gone
-//   411 Length Required
-//   412 Precondition Failed
-//   413 Request Entity Too Large
-//   414 Request-URI Too Long
-//   415 Unsupported Media Type
-//   416 Requested Range Not Satisfiable
-//   417 Expectation Failed
-//   418 I'm a teapot (RFC 2324)
-//   420 Enhance Your Calm (Twitter)
-//   422 Unprocessable Entity (WebDAV)
-//   423 Locked (WebDAV)
-//   424 Failed Dependency (WebDAV)
-//   425 Reserved for WebDAV
-//   426 Upgrade Required
-//   428 Precondition Required
-//   429 Too Many Requests
-//   431 Request Header Fields Too Large
-//   444 No Response (Nginx)
-//   449 Retry With (Microsoft)
-//   450 Blocked by Windows Parental Controls (Microsoft)
-//   451 Unavailable For Legal Reasons
-//   499 Client Closed Request (Nginx)
 }

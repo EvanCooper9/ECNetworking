@@ -1,5 +1,6 @@
-import ECNetworking
 import XCTest
+
+@testable import ECNetworking
 
 final class NetworkTests: XCTestCase {
     
@@ -19,7 +20,7 @@ final class NetworkTests: XCTestCase {
     func testThatActionCanBeAdded() {
         let action = MockAction()
         network.add(action: action)
-        network.send(MockRequest())
+        network.send(MockRequest(), completion: nil)
         
         XCTAssertTrue(action.requestWillBegin)
         XCTAssertTrue(action.requestBegan)

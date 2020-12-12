@@ -8,13 +8,13 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ECNetworking'
-  s.version          = '1.2.0'
-  s.summary          = 'A simple swifty networking layer. Supports custom interceptions'
-  s.description      = 'A simple swifty networking layer. Supports custom interceptions'
+  s.version          = '1.2.2'
+  s.summary          = 'A simple swifty networking layer.'
+  s.description      = 'A simple swifty networking layer. Supports custom interceptions.'
   s.homepage         = 'https://github.com/EvanCooper9/ECNetworking'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'EvanCooper9' => 'evan.cooper@rogers.com' }
-  s.source           = { :git => 'https://github.com/EvanCooper9/ECNetworking.git', :tag => s.version.to_s }
+  s.source           = { :git => "#{s.homepage}.git", :tag => "v#{s.version}" }
   s.social_media_url = 'https://evancooper.tech'
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.3'
