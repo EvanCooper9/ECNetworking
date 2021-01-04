@@ -1,21 +1,15 @@
 import Foundation
 
 struct LoggingAction {
-    func description(for request: URLRequest) -> String {
-        guard let url = request.url,
-            let method = request.httpMethod,
-            let headers = request.allHTTPHeaderFields else {
-                return ""
-        }
-        
+    func description(for request: NetworkRequest) -> String {
         var description = "\n---------- BEGIN REQUEST ----------\n"
-        description.append("URL: \(url.absoluteString)")
-        description.append("\ncurl -X \(method) \"\(url.absoluteString)\"")
-        headers.forEach { key, value in
-            description.append(" -H \"\(key): \(value)\"")
+        description.append("URL: \(request.url.absoluteString)")
+        description.append("\ncurl -X \(request.method) \"\(request.url.absoluteString)\"")
+        request.headers.forEach {
+            description.append(" -H \"\($0): \($1)\"")
         }
         description.append(" -g --verbose")
-        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+        if let data = try? request.body?.encoded(), let bodyString = String(data: data, encoding: .utf8) {
             description.append(" -d '\(bodyString)'")
         }
         description.append("\n---------- END REQUEST ----------\n")
@@ -41,7 +35,7 @@ struct LoggingAction {
 }
 
 extension LoggingAction: RequestBeganAction {
-    func requestBegan(_ request: URLRequest) {
+    func requestBegan(_ request: NetworkRequest) {
         print(description(for: request))
     }
 }

@@ -47,7 +47,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ResponseBeganAction {
-    func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
+    func responseBegan(request: NetworkRequest, response: NetworkResponse) {
         addToLogTextView(request.url.absoluteString)
     }
 }

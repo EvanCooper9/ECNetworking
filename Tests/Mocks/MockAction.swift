@@ -35,7 +35,7 @@ extension MockAction: RequestBeganAction {
 }
 
 extension MockAction: ResponseBeganAction {
-    func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
+    func responseBegan(request: NetworkRequest, response: NetworkResponse) {
         responseBegan = true
     }
 }
