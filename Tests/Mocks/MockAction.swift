@@ -29,7 +29,7 @@ extension MockAction: RequestWillBeginAction {
 }
 
 extension MockAction: RequestBeganAction {
-    func requestBegan(_ request: URLRequest) {
+    func requestBegan(_ request: NetworkRequest) {
         requestBegan = true
     }
 }
