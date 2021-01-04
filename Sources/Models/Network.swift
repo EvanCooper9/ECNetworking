@@ -76,8 +76,8 @@ extension Network: Networking {
                     }
                     
                     let response = response as? HTTPURLResponse ?? HTTPURLResponse()
-                    self.responseBegan(request: networkRequest, response: response)
                     let networkResponse = NetworkResponse(response: response, data: data)
+                    self.responseBegan(request: networkRequest, response: networkResponse)
                     
                     self.responseCompleted(request: networkRequest, response: networkResponse) { result in
                         switch result {
@@ -90,7 +90,7 @@ extension Network: Networking {
                 }
                 
                 task?.resume()
-                self.requestBegan(urlRequest)
+                self.requestBegan(request)
             }
         }
         
@@ -107,7 +107,7 @@ extension Network: RequestWillBeginAction {
 }
 
 extension Network: RequestBeganAction {
-    public func requestBegan(_ request: URLRequest) {
+    public func requestBegan(_ request: NetworkRequest) {
         actions
             .compactMap { $0 as? RequestBeganAction }
             .forEach { $0.requestBegan(request) }
@@ -115,7 +115,7 @@ extension Network: RequestBeganAction {
 }
 
 extension Network: ResponseBeganAction {
-    public func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
+    public func responseBegan(request: NetworkRequest, response: NetworkResponse) {
         actions
             .compactMap { $0 as? ResponseBeganAction }
             .forEach { $0.responseBegan(request: request, response: response) }

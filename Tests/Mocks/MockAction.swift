@@ -29,13 +29,13 @@ extension MockAction: RequestWillBeginAction {
 }
 
 extension MockAction: RequestBeganAction {
-    func requestBegan(_ request: URLRequest) {
+    func requestBegan(_ request: NetworkRequest) {
         requestBegan = true
     }
 }
 
 extension MockAction: ResponseBeganAction {
-    func responseBegan(request: NetworkRequest, response: HTTPURLResponse) {
+    func responseBegan(request: NetworkRequest, response: NetworkResponse) {
         responseBegan = true
     }
 }

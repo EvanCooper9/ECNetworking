@@ -16,7 +16,7 @@ public protocol RequestBeganAction: Action {
     
     /// Called when a request is about to start.
     /// - Parameter request: The request that will start.
-    func requestBegan(_ request: URLRequest)
+    func requestBegan(_ request: NetworkRequest)
 }
 
 public protocol ResponseBeganAction: Action {
@@ -25,7 +25,7 @@ public protocol ResponseBeganAction: Action {
     /// - Parameters:
     ///   - request: The request that was sent.
     ///   - response: The response that was received.
-    func responseBegan(request: NetworkRequest, response: HTTPURLResponse)
+    func responseBegan(request: NetworkRequest, response: NetworkResponse)
 }
 
 public protocol ResponseCompletedAction: Action {
