@@ -34,11 +34,3 @@ extension AuthenticationAction: RequestWillBeginAction {
         }
     }
 }
-
-extension NetworkRequest {
-    var isAuthenticationRequest: Bool {
-        customProperties.keys
-            .compactMap { $0 as? String }
-            .contains("auth")
-    }
-}

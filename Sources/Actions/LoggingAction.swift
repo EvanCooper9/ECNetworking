@@ -40,9 +40,8 @@ extension LoggingAction: RequestBeganAction {
     }
 }
 
-extension LoggingAction: ResponseCompletedAction {
-    func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void) {
+extension LoggingAction: ResponseBeganAction {
+    func responseBegan(request: NetworkRequest, response: NetworkResponse) {
         print(description(for: response))
-        completion(.success(response))
     }
 }

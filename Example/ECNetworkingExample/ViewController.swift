@@ -26,7 +26,11 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func sendRequestButtonTapped(_ sender: Any) {
-        network.send(GetRequest())
+        addToLogTextView("Sending request...")
+        addToLogTextView("Authenticated: \(userDefaults.authenticated)")
+        network.send(SomeRequest()) { [weak self] _ in
+            self?.addToLogTextView("Reqest completed\n")
+        }
     }
     
     @IBAction private func clearAuthButtonTapped(_ sender: Any) {
@@ -48,6 +52,7 @@ class ViewController: UIViewController {
 
 extension ViewController: ResponseBeganAction {
     func responseBegan(request: NetworkRequest, response: NetworkResponse) {
-        addToLogTextView(request.url.absoluteString)
+        guard let requestName = request.requestName else { return }
+        addToLogTextView(" - Response for \(requestName)")
     }
 }

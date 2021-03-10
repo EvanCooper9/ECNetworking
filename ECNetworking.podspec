@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ECNetworking'
-  s.version          = '1.2.2'
+  s.version          = '1.2.3'
   s.summary          = 'A simple swifty networking layer.'
   s.description      = 'A simple swifty networking layer. Supports custom interceptions.'
   s.homepage         = 'https://github.com/EvanCooper9/ECNetworking'

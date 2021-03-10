@@ -83,5 +83,47 @@ Actions are used to add custom behaviour during the lifecyle of a network reques
 
 > Note: A default logging action is available for use through the `logging` property of `NetworkConfiguration`. The example project has an additional `AuthenticationAction` example.
 
+## Extending Requests
+It may be useful to add other properties to a request. An authentication action, for example, might add authentication headers to requests before they're sent, but not all requests require authentication, like a login request.
+
+>Note: A `Request` is transformed to a `NetworkRequest` through `buildRequest(baseURL:)` when being sent. Additional information can be persisted through `customProperties`. When implementing actions, you can act on the data stored within `customProperties` of a given `NetworkRequest`.
+
+```swift
+protocol MyRequest: Request {
+    var requiresAuthentication: Bool { get }
+    // etc...
+}
+
+extension MyRequest {
+    // Provide default implementation if you want
+    var requiresAuthentication: Bool { true }
+
+    // Implement `customProperties` from Request
+    var customProperties: [AnyHashable: Any] {
+        ["requiresAuthentication": requiresAuthentication]
+    }
+}
+
+extension NetworkRequest {
+    var requiresAuthentication: Bool {
+        customProperties["requiresAuthentication"] as? Bool  ?? false
+    }
+}
+```
+And then when modelling requests,
+
+```swift
+struct LoginRequest {
+    let username: String
+    let password: String
+}
+
+// Conform to `MyRequest` instead of `Request`
+extension LoginRequest: MyRequest {
+    var requiresAuthentication: Bool { false }
+    // ...
+}
+```
+
 ## License
 ECNetworking is available under the MIT license. See the LICENSE file for more info.
