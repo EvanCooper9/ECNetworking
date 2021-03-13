@@ -66,8 +66,8 @@ extension Network: Networking {
             switch result {
             case .failure(let error):
                 completion?(.failure(error))
-            case .success(let networkRequest):
-                let urlRequest = networkRequest.asURLRequest(with: self.encoder)
+            case .success(let request):
+                let urlRequest = request.asURLRequest(with: self.encoder)
                 task = self.session.dataTask(with: urlRequest) { data, response, error in
                     
                     if let error = error {
@@ -75,11 +75,13 @@ extension Network: Networking {
                         return
                     }
                     
-                    let response = response as? HTTPURLResponse ?? HTTPURLResponse()
-                    let networkResponse = NetworkResponse(response: response, data: data)
-                    self.responseBegan(request: networkRequest, response: networkResponse)
+                    let response = NetworkResponse(
+                        response: response as? HTTPURLResponse ?? .init(),
+                        data: data
+                    )
                     
-                    self.responseCompleted(request: networkRequest, response: networkResponse) { result in
+                    self.responseBegan(request: request, response: response)
+                    self.responseCompleted(request: request, response: response) { result in
                         switch result {
                         case .failure(let error):
                             completion?(.failure(error))
