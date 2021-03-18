@@ -2,35 +2,34 @@ import Foundation
 
 struct LoggingAction {
     func description(for request: NetworkRequest) -> String {
-        var description = "\n---------- BEGIN REQUEST ----------\n"
+        var description = [String]()
+        description.append("---------- BEGIN REQUEST ----------")
         description.append("URL: \(request.url.absoluteString)")
-        description.append("\ncurl -X \(request.method) \"\(request.url.absoluteString)\"")
-        request.headers.forEach {
-            description.append(" -H \"\($0): \($1)\"")
-        }
-        description.append(" -g --verbose")
+        
+        var command = "curl -X \(request.method) \"\(request.url.absoluteString)\""
+        request.headers.forEach { command.append(" -H \"\($0): \($1)\"") }
+        command.append(" -g --verbose")
         if let data = try? request.body?.encoded(), let bodyString = String(data: data, encoding: .utf8) {
-            description.append(" -d '\(bodyString)'")
+            command.append(" -d '\(bodyString)'")
         }
-        description.append("\n---------- END REQUEST ----------\n")
-        return description
+        
+        description.append(command)
+        description.append("---------- END REQUEST ----------")
+        return description.joined(separator: "\n")
     }
     
-    func description(for response: NetworkResponse, error: Error? = nil) -> String {
-        var description = "\n---------- BEGIN RESPONSE ----------\n"
+    func description(for response: NetworkResponse) -> String {
+        var description = [String]()
+        description.append("---------- BEGIN RESPONSE ----------")
         description.append("URL: \(response.response.url?.absoluteString ?? "-")")
-        description.append("\nStatus code: \(response.response.statusCode)")
+        description.append("Status code: \(response.response.statusCode)")
         
         if let data = response.data, let dataString = String(data: data, encoding: .utf8) {
-            description.append("\nData: \(dataString)")
+            description.append("Data: \(dataString)")
         }
         
-        if let error = error {
-            description.append("\nError: \(error.localizedDescription)")
-        }
-        
-        description.append("\n---------- END RESPONSE ----------\n")
-        return description
+        description.append("---------- END RESPONSE ----------")
+        return description.joined(separator: "\n")
     }
 }
 

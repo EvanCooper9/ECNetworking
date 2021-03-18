@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NetworkRequest {
+public struct NetworkRequest: CustomProperty {
     
     public typealias Headers = [String: String]
     
