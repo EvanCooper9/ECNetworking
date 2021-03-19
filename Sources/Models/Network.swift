@@ -20,7 +20,7 @@ public final class Network {
         self.session = session
         
         if configuration.logging {
-            add(action: LoggingAction())
+            add(action: LoggingAction(encoder: encoder))
         }
     }
 }
@@ -101,7 +101,7 @@ extension Network: Networking {
 }
 
 extension Network: RequestWillBeginAction {
-    public func requestWillBegin(_ request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
+    public func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
         actions
             .compactMap { $0 as? RequestWillBeginAction }
             .requestWillBegin(request, completion: completion)
@@ -125,7 +125,7 @@ extension Network: ResponseBeganAction {
 }
 
 extension Network: ResponseCompletedAction {
-    public func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void) {
+    public func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping ResponseCompletion) {
         actions
             .compactMap { $0 as? ResponseCompletedAction }
             .responseCompleted(request: request, response: response, completion: completion)

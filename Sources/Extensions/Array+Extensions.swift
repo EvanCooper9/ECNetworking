@@ -1,7 +1,9 @@
 import Foundation
 
-extension Array where Element == RequestWillBeginAction {
-    func requestWillBegin(_ request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
+extension Array: Action {}
+
+extension Array: RequestWillBeginAction where Element == RequestWillBeginAction {
+    public func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
         guard let first = first else {
             completion(.success(request))
             return
@@ -9,8 +11,8 @@ extension Array where Element == RequestWillBeginAction {
         
         first.requestWillBegin(request) { result in
             switch result {
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure:
+                completion(result)
             case .success(let request):
                 let remaining = Array(self.dropFirst())
                 remaining.requestWillBegin(request, completion: completion)
@@ -19,17 +21,17 @@ extension Array where Element == RequestWillBeginAction {
     }
 }
 
-extension Array where Element == ResponseCompletedAction {
-    func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void) {
+extension Array: ResponseCompletedAction where Element == ResponseCompletedAction {
+    public func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping ResponseCompletion) {
         guard let first = first else {
             completion(.success(response))
             return
         }
-        
+
         first.responseCompleted(request: request, response: response) { result in
             switch result {
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure:
+                completion(result)
             case .success(let response):
                 let remaining = Array(self.dropFirst())
                 remaining.responseCompleted(request: request, response: response, completion: completion)

@@ -17,7 +17,7 @@ struct AuthenticationAction {
 }
 
 extension AuthenticationAction: RequestWillBeginAction {
-    func requestWillBegin(_ request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
+    func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
         guard !request.isAuthenticationRequest, !userDefaults.authenticated else {
             completion(.success(request))
             return

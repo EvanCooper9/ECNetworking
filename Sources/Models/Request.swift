@@ -1,11 +1,9 @@
 import Foundation
 
-public protocol Request: Encodable {
+public protocol Request: CustomProperty, Encodable {
     
     associatedtype Response
-    
-    var customProperties: [AnyHashable: Any] { get }
-    
+        
     func buildRequest(with baseURL: URL) -> NetworkRequest
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response
 }
@@ -22,4 +20,8 @@ extension Request where Response == Void {
 
 public extension Request {
     var customProperties: [AnyHashable: Any] { [:] }
+}
+
+public protocol CustomProperty {
+    var customProperties: [AnyHashable: Any] { get }
 }
