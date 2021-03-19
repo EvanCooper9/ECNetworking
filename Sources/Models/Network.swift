@@ -20,7 +20,7 @@ public final class Network {
         self.session = session
         
         if configuration.logging {
-            add(action: LoggingAction())
+            add(action: LoggingAction(encoder: encoder))
         }
     }
 }

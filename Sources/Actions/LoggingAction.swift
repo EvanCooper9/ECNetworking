@@ -1,6 +1,9 @@
 import Foundation
 
 struct LoggingAction {
+    
+    let encoder: JSONEncoder
+    
     func description(for request: NetworkRequest) -> String {
         var description = [String]()
         description.append("---------- BEGIN REQUEST ----------")
@@ -9,12 +12,14 @@ struct LoggingAction {
         var command = "curl -X \(request.method) \"\(request.url.absoluteString)\""
         request.headers.forEach { command.append(" -H \"\($0): \($1)\"") }
         command.append(" -g --verbose")
-        if let data = try? request.body?.encoded(), let bodyString = String(data: data, encoding: .utf8) {
+        if let data = try? request.body?.encoded(using: encoder), let bodyString = String(data: data, encoding: .utf8) {
             command.append(" -d '\(bodyString)'")
         }
         
         description.append(command)
         description.append("---------- END REQUEST ----------")
+        description.insert("", at: 0)
+        description.append("")
         return description.joined(separator: "\n")
     }
     
@@ -29,6 +34,8 @@ struct LoggingAction {
         }
         
         description.append("---------- END RESPONSE ----------")
+        description.insert("", at: 0)
+        description.append("")
         return description.joined(separator: "\n")
     }
 }
