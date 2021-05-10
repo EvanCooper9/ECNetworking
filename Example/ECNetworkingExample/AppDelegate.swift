@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  ECNetworkingExample
-//
-//  Created by Evan Cooper on 2020-10-14.
-//
-
 import UIKit
 
 @main

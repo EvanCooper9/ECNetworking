@@ -1,9 +1,15 @@
 import ECNetworking
 import Foundation
 
-struct MockRequest: Request {
+struct MockVoidRequest: Request {
+    func buildRequest(with baseURL: URL) -> NetworkRequest {
+        .init(method: .get, url: baseURL)
+    }
+}
+
+struct MockDataRequest: Request {
     
-    var customProperties: [AnyHashable : Any] { [:] }
+    typealias Response = Data
     
     func buildRequest(with baseURL: URL) -> NetworkRequest {
         .init(method: .get, url: baseURL)

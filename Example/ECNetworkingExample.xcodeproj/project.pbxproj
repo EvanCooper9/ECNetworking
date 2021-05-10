@@ -19,7 +19,6 @@
 		7CDF0F432537DB1100C3200D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDF0F412537DB1100C3200D /* Main.storyboard */; };
 		7CDF0F482537DB1200C3200D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDF0F462537DB1200C3200D /* LaunchScreen.storyboard */; };
 		7CDF0F532537DB1300C3200D /* ECNetworkingExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F522537DB1300C3200D /* ECNetworkingExampleTests.swift */; };
-		7CDF0F5E2537DB1300C3200D /* ECNetworkingExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */; };
 		7CDF0F772537DC3300C3200D /* ECNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7CDF0F762537DC3300C3200D /* ECNetworking */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +57,6 @@
 		7CDF0F522537DB1300C3200D /* ECNetworkingExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECNetworkingExampleTests.swift; sourceTree = "<group>"; };
 		7CDF0F542537DB1300C3200D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDF0F592537DB1300C3200D /* ECNetworkingExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECNetworkingExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECNetworkingExampleUITests.swift; sourceTree = "<group>"; };
 		7CDF0F5F2537DB1300C3200D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDF0F712537DB3E00C3200D /* ECNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECNetworking; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,7 +172,6 @@
 		7CDF0F5C2537DB1300C3200D /* ECNetworkingExampleUITests */ = {
 			isa = PBXGroup;
 			children = (
-				7CDF0F5D2537DB1300C3200D /* ECNetworkingExampleUITests.swift */,
 				7CDF0F5F2537DB1300C3200D /* Info.plist */,
 			);
 			path = ECNetworkingExampleUITests;
@@ -343,7 +340,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CDF0F5E2537DB1300C3200D /* ECNetworkingExampleUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

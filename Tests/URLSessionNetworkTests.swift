@@ -2,40 +2,40 @@ import XCTest
 
 @testable import ECNetworking
 
-final class NetworkTests: XCTestCase {
+final class URLSessionNetworkTests: XCTestCase {
     
     private enum Error: Swift.Error {
         case any
     }
     
     private var session: MockURLSession!
-    private var network: Network!
+    private var network: URLSessionNetwork!
     
     override func setUp() {
         super.setUp()
         session = MockURLSession()
-        network = Network(configuration: .mock, session: session)
+        network = URLSessionNetwork(configuration: .mock, session: session)
     }
     
     func testThatActionCanBeAdded() {
         let action = MockAction()
         network.add(action: action)
-        network.send(MockRequest(), completion: nil)
-        
-        XCTAssertTrue(action.requestWillBegin)
-        XCTAssertTrue(action.requestBegan)
-        XCTAssertTrue(action.responseBegan)
-        XCTAssertTrue(action.responseCompleted)
+        network.send(MockVoidRequest()) { _ in
+            XCTAssertTrue(action.requestWillBegin)
+            XCTAssertTrue(action.requestBegan)
+            XCTAssertTrue(action.responseBegan)
+            XCTAssertTrue(action.responseCompleted)
+        }
     }
     
     func testThatRequestWillBeginErrorStopsRequestFromBeingSent() {
         let action = MockAction(requestWillBeginError: Error.any)
         network.add(action: action)
-        let task = network.send(MockRequest(), completion: nil)
         
-        XCTAssertTrue(action.requestWillBegin)
-        XCTAssertFalse(action.requestBegan)
-        XCTAssertNil(task)
+        network.send(MockVoidRequest()) { _ in
+            XCTAssertTrue(action.requestWillBegin)
+            XCTAssertFalse(action.requestBegan)
+        }
     }
     
     func testThatResponseCompletedErrorIsReported() {
@@ -45,20 +45,19 @@ final class NetworkTests: XCTestCase {
         let action = MockAction(responseCompletedError: expectedError)
         network.add(action: action)
         
-        network.send(.mock) { result in
+        network.send(MockVoidRequest()) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error as? Error, expectedError)
+                XCTAssertTrue(action.requestWillBegin)
+                XCTAssertTrue(action.requestBegan)
+                XCTAssertTrue(action.responseBegan)
+                XCTAssertTrue(action.responseCompleted)
                 expectation.fulfill()
             case .success:
                 return
             }
         }
-        
-        XCTAssertTrue(action.requestWillBegin)
-        XCTAssertTrue(action.requestBegan)
-        XCTAssertTrue(action.responseBegan)
-        XCTAssertTrue(action.responseCompleted)
         
         wait(for: [expectation], timeout: 1)
     }
@@ -66,17 +65,7 @@ final class NetworkTests: XCTestCase {
     func testThatRequestIsSent() {
         let expectation = self.expectation(description: #function)
         
-        network.send(MockRequest()) { _ in
-            expectation.fulfill()
-        }
-        
-        wait(for: [expectation], timeout: 1)
-    }
-    
-    func testThatNetworkRequestIsSent() {
-        let expectation = self.expectation(description: #function)
-        
-        network.send(.mock) { _ in
+        network.send(MockVoidRequest()) { _ in
             expectation.fulfill()
         }
         
@@ -89,7 +78,7 @@ final class NetworkTests: XCTestCase {
         let expectedError = Error.any
         session.error = expectedError
         
-        network.send(.mock) { result in
+        network.send(MockVoidRequest()) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error as? Error, expectedError)
@@ -105,7 +94,7 @@ final class NetworkTests: XCTestCase {
     func testThatNoDataFromURLSessionErrorIsReported() {
         let expectation = self.expectation(description: #function)
         
-        network.send(MockRequest()) { result in
+        network.send(MockDataRequest()) { result in
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error as? NetworkError, .noData)
@@ -118,22 +107,12 @@ final class NetworkTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
-    func testThatRequestsSucceed() {
+    func testThatRequestSucceeds() {
         let expectation = self.expectation(description: #function)
-        expectation.expectedFulfillmentCount = 2
         
         session.data = Data()
         
-        network.send(MockRequest()) { result in
-            switch result {
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            case .success:
-                expectation.fulfill()
-            }
-        }
-        
-        network.send(.mock) { result in
+        network.send(MockVoidRequest()) { result in
             switch result {
             case .failure(let error):
                 XCTFail(error.localizedDescription)

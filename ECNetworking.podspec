@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.source           = { :git => "#{s.homepage}.git", :tag => "v#{s.version}" }
   s.social_media_url = 'https://evancooper.tech'
   s.ios.deployment_target = '11.0'
-  s.swift_version = '5.3'
+  s.swift_version = '5.5'
   s.source_files = 'Sources/**/*'
 end

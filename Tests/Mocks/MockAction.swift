@@ -17,9 +17,9 @@ final class MockAction: Action {
 }
 
 extension MockAction: RequestWillBeginAction {
-    func requestWillBegin(_ request: NetworkRequest, completion: @escaping (Result<NetworkRequest, Error>) -> Void) {
+    func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
         requestWillBegin = true
-        
+
         if let error = requestWillBeginError {
             completion(.failure(error))
         } else {
@@ -41,7 +41,7 @@ extension MockAction: ResponseBeganAction {
 }
 
 extension MockAction: ResponseCompletedAction {
-    func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping (Result<NetworkResponse, Error>) -> Void) {
+    func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping ResponseCompletion) {
         responseCompleted = true
         
         if let error = responseCompletedError {
