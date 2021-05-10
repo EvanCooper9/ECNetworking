@@ -26,7 +26,7 @@ public final class NetworkOperation: AsynchronousOperation {
         
         task = session.dataTask(with: networkRequest.asURLRequest(with: encoder))  { [weak self] data, response, error in
             guard let self = self else { return }
-            self.completionBlock = { self.requestCompletion?(networkRequest, data, response, error) }
+            self.requestCompletion?(networkRequest, data, response, error)
             self.complete()
         }
         
