@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ECNetworking'
-  s.version          = "#{ ENV['RELEASE_VERSION'] }"
+  s.version          = ENV['RELEASE_VERSION'] || 2.0
   s.summary          = 'A simple swifty networking layer.'
   s.description      = 'A simple swifty networking layer. Supports custom interceptions.'
   s.homepage         = 'https://github.com/EvanCooper9/ECNetworking'
