@@ -12,6 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Setup environment
+      env:
+        RELEASE_VERSION="$(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})"
       
     - name: Install Cocoapods
       run: gem install cocoapods
