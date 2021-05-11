@@ -19,6 +19,7 @@ jobs:
     - name: Deploy to Cocoapods
       run: |
         set -eo pipefail
+        RELEASE_VERSION="$(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})"
         pod lib lint --allow-warnings
         pod trunk push --allow-warnings
       env:
