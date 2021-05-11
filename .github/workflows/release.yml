@@ -6,12 +6,15 @@ on:
       - published
 
 jobs:
-  build:
+  release:
 
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name: Setup environment
+      run: echo 'RELEASE_VERSION=$(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})' >> $GITHUB_ENV
       
     - name: Install Cocoapods
       run: gem install cocoapods
@@ -19,8 +22,7 @@ jobs:
     - name: Deploy to Cocoapods
       run: |
         set -eo pipefail
-        RELEASE_VERSION="$(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})"
         pod lib lint --allow-warnings
         pod trunk push --allow-warnings
       env:
-        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.POD_TRUNK_TOKEN }}
