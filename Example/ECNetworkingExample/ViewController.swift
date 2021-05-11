@@ -9,13 +9,14 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private lazy var network: Networking = {
+    private lazy var network: Network = {
         let configuration = NetworkConfiguration(
             baseURL: URL(string: "https://postman-echo.com")!,
-            logging: true
+            logging: true,
+            maximumConcurrentRequests: 1
         )
         
-        let network = Network(configuration: configuration)
+        let network = URLSessionNetwork(configuration: configuration)
         network.add(action: AuthenticationAction(network: network))
         network.add(action: self)
         return network
@@ -26,10 +27,12 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func sendRequestButtonTapped(_ sender: Any) {
-        addToLogTextView("Sending request...")
-        addToLogTextView("Authenticated: \(userDefaults.authenticated)")
-        network.send(SomeRequest()) { [weak self] _ in
-            self?.addToLogTextView("Reqest completed\n")
+        sendRequest()
+    }
+    
+    @IBAction func sendMultipleRequestsButtonTapped(_ sender: Any) {
+        (0..<10).forEach { request in
+            sendRequest(number: request)
         }
     }
     
@@ -39,14 +42,39 @@ class ViewController: UIViewController {
     
     @IBAction private func clearLogTapped(_ sender: Any) {
         logTextView.text = nil
+        logTextView.contentOffset = .zero
     }
     
     // MARK: - Private Methods
     
+    private func sendRequest(number: Int? = nil) {
+        addToLogTextView("Starting request\(number?.description ?? "")...")
+        network.send(SomeRequest()) { [weak self] _ in
+            self?.addToLogTextView("Reqest\(number?.description ?? "") completed")
+        }
+    }
+    
     private func addToLogTextView(_ string: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.logTextView.text.append(string + "\n")
+            guard let self = self else { return }
+            self.logTextView.text.append(string + "\n")
+            
+            let diff = self.logTextView.bounds.height - self.logTextView.contentSize.height
+            if diff < 0 {
+                self.logTextView.contentOffset = CGPoint(x: 0, y: -diff)
+            }
         }
+    }
+}
+
+extension ViewController: RequestBeganAction {
+    func requestBegan(_ request: NetworkRequest) {
+        guard let requestName = request.requestName else { return }
+        let logs = [
+            "Authenticated: \(userDefaults.authenticated)",
+            " - Request for \(requestName)"
+        ]
+        addToLogTextView(logs.joined(separator: "\n"))
     }
 }
 

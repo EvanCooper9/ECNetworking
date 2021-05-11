@@ -16,7 +16,7 @@ network.send(request) { result in
 
 ## Installation
 
-> Looking for an Rx version? Checkout [RxECNetworking](https://github.com/EvanCooper9/RxECNetworking)
+> Looking for an Rx version? Checkout [RxNetworking](https://github.com/EvanCooper9/RxNetworking)
 
 ### SPM
 ```swift
@@ -123,6 +123,15 @@ extension LoginRequest: MyRequest {
     var requiresAuthentication: Bool { false }
     // ...
 }
+```
+
+And then in your action
+
+```swift
+struct AuthenticationAction: RequestWillBeginAction {
+    func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
+        guard !request.isAuthenticationRequest else { return }
+        // Add authentication headers
 ```
 
 ## License
