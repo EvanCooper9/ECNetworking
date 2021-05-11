@@ -16,9 +16,7 @@ jobs:
     - name: Setup environment
       run: |
         echo "GITHUB_REF: ${GITHUB_REF}
-        echo "RELEASE_VERSION: $(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})
-      env:
-        RELEASE_VERSION: $(awk -F '/' '{print $NF}' <<< ${GITHUB_REF})
+        echo $(awk -F '/' '{print $NF}' <<< ${GITHUB_REF}) >> $GITHUB_ENV
       
     - name: Install Cocoapods
       run: gem install cocoapods
