@@ -20,12 +20,7 @@ network.send(request) { result in
 
 ### SPM
 ```swift
-.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "1.0.0")
-```
-
-### Cocoapods
-```ruby
-pod 'ECNetworking'
+.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "2.0.0")
 ```
 
 ## Usage
