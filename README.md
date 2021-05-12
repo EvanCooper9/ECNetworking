@@ -125,7 +125,7 @@ And then in your action
 ```swift
 struct AuthenticationAction: RequestWillBeginAction {
     func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
-        guard !request.isAuthenticationRequest else { return }
+        guard request.requiresAuthentication else { return }
         // Add authentication headers
 ```
 
