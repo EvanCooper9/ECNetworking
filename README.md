@@ -16,7 +16,7 @@ network.send(request) { result in
 
 ## Installation
 
-> Looking for an Rx version? Checkout [RxNetworking](https://github.com/EvanCooper9/RxNetworking)
+> Looking for an Rx version? Checkout [RxECNetworking](https://github.com/EvanCooper9/RxECNetworking)
 
 ### SPM
 ```swift
