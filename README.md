@@ -16,16 +16,11 @@ network.send(request) { result in
 
 ## Installation
 
-> Looking for an Rx version? Checkout [RxNetworking](https://github.com/EvanCooper9/RxNetworking)
+> Looking for an Rx version? Checkout [RxECNetworking](https://github.com/EvanCooper9/RxECNetworking)
 
 ### SPM
 ```swift
-.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "1.0.0")
-```
-
-### Cocoapods
-```ruby
-pod 'ECNetworking'
+.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "2.0.0")
 ```
 
 ## Usage
@@ -130,7 +125,7 @@ And then in your action
 ```swift
 struct AuthenticationAction: RequestWillBeginAction {
     func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
-        guard !request.isAuthenticationRequest else { return }
+        guard request.requiresAuthentication else { return }
         // Add authentication headers
 ```
 
