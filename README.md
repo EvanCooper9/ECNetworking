@@ -33,7 +33,8 @@ let configuration = NetworkConfiguration(
     baseURL: URL(string: "https://example.com")!,
     logging: true
 )
-let network = Network(configuration: configuration)
+
+let network = URLSessionNetwork(configuration: configuration)
 ```
 
 ### Modelling requests
@@ -86,14 +87,13 @@ It may be useful to add other properties to a request. An authentication action,
 ```swift
 protocol MyRequest: Request {
     var requiresAuthentication: Bool { get }
-    // etc...
 }
 
 extension MyRequest {
     // Provide default implementation if you want
     var requiresAuthentication: Bool { true }
 
-    // Implement `customProperties` from Request
+    // Implement `customProperties` from `Request`
     var customProperties: [AnyHashable: Any] {
         ["requiresAuthentication": requiresAuthentication]
     }
@@ -101,7 +101,7 @@ extension MyRequest {
 
 extension NetworkRequest {
     var requiresAuthentication: Bool {
-        customProperties["requiresAuthentication"] as? Bool  ?? false
+        customProperties["requiresAuthentication"] as? Bool ?? false
     }
 }
 ```
@@ -120,13 +120,15 @@ extension LoginRequest: MyRequest {
 }
 ```
 
-And then in your action
+And then in your action,
 
 ```swift
 struct AuthenticationAction: RequestWillBeginAction {
     func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
         guard request.requiresAuthentication else { return }
         // Add authentication headers
+    }
+}
 ```
 
 ## License

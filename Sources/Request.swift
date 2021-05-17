@@ -18,6 +18,10 @@ extension Request where Response == Void {
     public func response(from data: Data, with decoder: JSONDecoder) throws {}
 }
 
+extension Request where Response == Data {
+    public func response(from data: Data, with decoder: JSONDecoder) throws -> Response { data }
+}
+
 public extension Request {
     var customProperties: CustomProperties { [:] }
 }
