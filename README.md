@@ -20,7 +20,7 @@ network.send(request) { result in
 
 ### SPM
 ```swift
-.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "2.0.0")
+.package(url: "https://github.com/EvanCooper9/ECNetworking", from: "3.0.0")
 ```
 
 ## Usage
