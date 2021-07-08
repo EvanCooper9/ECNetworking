@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Request: CustomPropertyContaining, Encodable {
+public protocol Request: CustomPropertyContaining {
     
     associatedtype Response
         
@@ -8,18 +8,18 @@ public protocol Request: CustomPropertyContaining, Encodable {
     func response(from data: Data, with decoder: JSONDecoder) throws -> Response
 }
 
-extension Request where Response: Decodable {
-    public func response(from data: Data, with decoder: JSONDecoder) throws -> Response {
+public extension Request where Response: Decodable {
+    func response(from data: Data, with decoder: JSONDecoder) throws -> Response {
         try decoder.decode(Response.self, from: data)
     }
 }
 
-extension Request where Response == Void {
-    public func response(from data: Data, with decoder: JSONDecoder) throws {}
+public extension Request where Response == Void {
+    func response(from data: Data, with decoder: JSONDecoder) throws {}
 }
 
-extension Request where Response == Data {
-    public func response(from data: Data, with decoder: JSONDecoder) throws -> Response { data }
+public extension Request where Response == Data {
+    func response(from data: Data, with decoder: JSONDecoder) throws -> Response { data }
 }
 
 public extension Request {

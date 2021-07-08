@@ -12,10 +12,17 @@ public final class URLSessionNetwork {
     
     private lazy var requestQueue: OperationQueue = {
         let queue = OperationQueue()
-        if let maxConcurrentRequests = configuration.maximumConcurrentRequests {
-            queue.maxConcurrentOperationCount = maxConcurrentRequests
-        }
+        queue.maxConcurrentOperationCount =
+            configuration.maximumConcurrentRequests ??
+            OperationQueue.defaultMaxConcurrentOperationCount
         return queue
+    }()
+    
+    private lazy var decodingQueue: DispatchQueue = {
+        .init(
+            label: "com.evancooper.ECNetworking.decoding",
+            attributes: .concurrent
+        )
     }()
 
     // MARK: - Lifecycle
@@ -57,15 +64,17 @@ extension URLSessionNetwork: Network {
                 case .failure(let error):
                     completion?(.failure(error))
                 case .success(let networkRequest):
-                    guard !operation.isCancelled else {
-                        /// Request should begin (result is success) but it has already been cancelled. This is because there was some
-                        /// asynchronous action that took place during some action's `requestWillBegin` before calling the completion,
-                        /// meaning the operation failed to start and the request should be resent.
-                        self.send(request, withPriority: priority, completion: completion)
-                        return
-                    }
                     operation.request = networkRequest
-                    self.requestBegan(networkRequest)
+                    defer { self.requestBegan(networkRequest) }
+                    
+                    if operation.isCancelled, let newOperation = operation.copy() as? NetworkOperation {
+                        /// Request should begin (result is success) but it has already been cancelled. This is because there was some
+                        /// asynchronous work that took place during an action's `requestWillBegin` before calling the completion.
+                        /// This causes operation to be cancelled when starting and the request should be resent. We can't send re-queue
+                        /// an operation that has previously been cancelled, so we should create a copy and queue it.
+                        newOperation.requestSetup = nil
+                        self.requestQueue.addOperation(newOperation)
+                    }
                 }
             }
         }
@@ -89,11 +98,13 @@ extension URLSessionNetwork: Network {
                 case .failure(let error):
                     completion?(.failure(error))
                 case .success(let response):
-                    do {
-                        guard let data = response.data else { throw NetworkError.noData }
-                        completion?(.success(try request.response(from: data, with: self.decoder)))
-                    } catch {
-                        completion?(.failure(error))
+                    self.decodingQueue.async {
+                        do {
+                            guard let data = response.data else { throw NetworkError.noData }
+                            completion?(.success(try request.response(from: data, with: self.decoder)))
+                        } catch {
+                            completion?(.failure(error))
+                        }
                     }
                 }
             }

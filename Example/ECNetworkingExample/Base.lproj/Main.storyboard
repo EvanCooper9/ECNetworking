@@ -23,21 +23,21 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                         <state key="normal" title="Send Request"/>
                                         <connections>
-                                            <action selector="sendRequestButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5fA-yo-tQO"/>
+                                            <action selector="sendRequestTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5fA-yo-tQO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-I0-u2W">
                                         <rect key="frame" x="0.0" y="38" width="414" height="30"/>
                                         <state key="normal" title="Send 10 Requests"/>
                                         <connections>
-                                            <action selector="sendMultipleRequestsButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="elk-56-sDC"/>
+                                            <action selector="sendMultipleRequestsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="elk-56-sDC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slL-OE-UfF">
                                         <rect key="frame" x="0.0" y="76" width="414" height="30"/>
                                         <state key="normal" title="Clear Authentication"/>
                                         <connections>
-                                            <action selector="clearAuthButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nKX-xa-D65"/>
+                                            <action selector="clearAuthTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nKX-xa-D65"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxe-vD-xtn">

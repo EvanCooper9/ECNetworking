@@ -36,11 +36,12 @@ extension AuthenticationAction: RequestWillBeginAction {
             guard let self = self else { return }
             self.handle(result, for: request, with: completion)
             self.loginClosures.forEach { $0(result) }
+            self.loginClosures = []
             self.loginActive = false
         }
     }
     
-    private func handle(_ result: Result<Void, Error>, for request: NetworkRequest, with completion: @escaping RequestCompletion) {
+    private func handle(_ result: Result<Void, Error>, for request: NetworkRequest, with completion: RequestCompletion) {
         switch result {
         case .failure(let error):
             completion(.failure(error))

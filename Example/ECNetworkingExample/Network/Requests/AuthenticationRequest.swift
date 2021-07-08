@@ -1,7 +1,7 @@
 import ECNetworking
 import Foundation
 
-struct AuthenticationRequest {
+struct AuthenticationRequest: Encodable {
     let user = "evan@example.com"
     let pass = "password"
 }

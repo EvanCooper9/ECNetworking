@@ -9,34 +9,33 @@ class ViewController: UIViewController {
     
     // MARK: - Private Properties
     
+    private let userDefaults: UserDefaults = .standard
+    
     private lazy var network: Network = {
         let configuration = NetworkConfiguration(
             baseURL: URL(string: "https://postman-echo.com")!,
-            logging: true,
-            maximumConcurrentRequests: 1
+            logging: false
         )
         
         let network = URLSessionNetwork(configuration: configuration)
-        network.add(action: AuthenticationAction(network: network))
+        network.add(action: AuthenticationAction(network: network, userDefaults: userDefaults))
         network.add(action: self)
         return network
     }()
     
-    private let userDefaults: UserDefaults = .standard
-    
     // MARK: - Actions
     
-    @IBAction private func sendRequestButtonTapped(_ sender: Any) {
+    @IBAction private func sendRequestTapped(_ sender: Any) {
         sendRequest()
     }
     
-    @IBAction func sendMultipleRequestsButtonTapped(_ sender: Any) {
+    @IBAction private func sendMultipleRequestsTapped(_ sender: Any) {
         (0..<10).forEach { request in
             sendRequest(number: request)
         }
     }
     
-    @IBAction private func clearAuthButtonTapped(_ sender: Any) {
+    @IBAction private func clearAuthTapped(_ sender: Any) {
         userDefaults.authenticated = false
     }
     

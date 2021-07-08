@@ -41,3 +41,14 @@ public final class NetworkOperation: AsynchronousOperation {
 }
 
 extension NetworkOperation: Cancellable {}
+
+extension NetworkOperation: NSCopying {
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copy = NetworkOperation(encoder: encoder, session: session)
+        copy.request = request
+        copy.requestSetup = requestSetup
+        copy.requestCompletion = requestCompletion
+        copy.task = task
+        return copy
+    }
+}
