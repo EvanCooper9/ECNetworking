@@ -9,7 +9,7 @@ struct LoggingAction {
         description.append("---------- BEGIN REQUEST ----------")
         description.append("URL: \(request.url.absoluteString)")
         
-        var command = "curl -X \(request.method) \"\(request.url.absoluteString)\""
+        var command = "curl -X \(request.method.rawValue) \"\(request.url.absoluteString)\""
         request.headers.forEach { command.append(" -H \"\($0): \($1)\"") }
         command.append(" -g --verbose")
         if let data = try? request.body?.encoded(using: encoder), let bodyString = String(data: data, encoding: .utf8) {
