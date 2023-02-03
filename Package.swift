@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ECNetworking",
+    platforms: [.iOS(.v14)],
     products: [
         .library(
             name: "ECNetworking",

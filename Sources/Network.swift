@@ -10,10 +10,10 @@ public protocol Network {
     func send<T: Request>(_ request: T, withPriority priority: Priority, completion: ((Result<T.Response, Error>) -> Void)?) -> Cancellable
 }
 
-extension Network {
+public extension Network {
     
     @discardableResult
-    public func send<T: Request>(_ request: T, withPriority priority: Priority = .normal, completion: ((Result<T.Response, Error>) -> Void)? = nil) -> Cancellable {
+    func send<T: Request>(_ request: T, withPriority priority: Priority = .normal, completion: ((Result<T.Response, Error>) -> Void)? = nil) -> Cancellable {
         send(request, withPriority: priority, completion: completion)
     }
 }
