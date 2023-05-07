@@ -5,6 +5,17 @@ public final class URLSessionNetwork {
     // MARK: - Private Properties
     
     private var actions: [Action]
+
+
+    private var loggingAction: LoggingAction?
+    private var configuredActions: [Action] {
+        var configuredActions = actions
+        if let loggingAction {
+            configuredActions.append(loggingAction)
+        }
+        return configuredActions
+    }
+
     private let configuration: NetworkConfiguration
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
@@ -35,7 +46,7 @@ public final class URLSessionNetwork {
         self.session = session
         
         if configuration.logging {
-            add(action: LoggingAction(encoder: encoder))
+            loggingAction = LoggingAction(encoder: encoder)
         }
     }
 }
@@ -117,7 +128,7 @@ extension URLSessionNetwork: Network {
 
 extension URLSessionNetwork: RequestWillBeginAction {
     public func requestWillBegin(_ request: NetworkRequest, completion: @escaping RequestCompletion) {
-        actions
+        configuredActions
             .compactMap { $0 as? RequestWillBeginAction }
             .requestWillBegin(request, completion: completion)
     }
@@ -125,7 +136,7 @@ extension URLSessionNetwork: RequestWillBeginAction {
 
 extension URLSessionNetwork: RequestBeganAction {
     public func requestBegan(_ request: NetworkRequest) {
-        actions
+        configuredActions
             .compactMap { $0 as? RequestBeganAction }
             .forEach { $0.requestBegan(request) }
     }
@@ -133,7 +144,7 @@ extension URLSessionNetwork: RequestBeganAction {
 
 extension URLSessionNetwork: ResponseBeganAction {
     public func responseBegan(request: NetworkRequest, response: NetworkResponse) {
-        actions
+        configuredActions
             .compactMap { $0 as? ResponseBeganAction }
             .forEach { $0.responseBegan(request: request, response: response) }
     }
@@ -141,7 +152,7 @@ extension URLSessionNetwork: ResponseBeganAction {
 
 extension URLSessionNetwork: ResponseCompletedAction {
     public func responseCompleted(request: NetworkRequest, response: NetworkResponse, completion: @escaping ResponseCompletion) {
-        actions
+        configuredActions
             .compactMap { $0 as? ResponseCompletedAction }
             .responseCompleted(request: request, response: response, completion: completion)
     }
