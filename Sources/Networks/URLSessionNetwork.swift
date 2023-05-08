@@ -5,9 +5,6 @@ public final class URLSessionNetwork {
     // MARK: - Private Properties
     
     private var actions: [Action]
-
-
-    private var loggingAction: LoggingAction?
     private var configuredActions: [Action] {
         var configuredActions = actions
         if let loggingAction {
@@ -15,6 +12,7 @@ public final class URLSessionNetwork {
         }
         return configuredActions
     }
+    private var loggingAction: LoggingAction?
 
     private let configuration: NetworkConfiguration
     private let decoder: JSONDecoder
